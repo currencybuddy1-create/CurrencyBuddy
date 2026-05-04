@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Currency Buddy — Find Trusted Forex Providers Near You</title>
+<meta name="description" content="Find and contact verified forex dealers, banks, and remittance services near you. Direct contact — no middlemen."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+/* ════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════ */
+:root {
+  --ink:    #0e1a0f;  --ink2: #2e3d2f;  --ink3: #5a6b5c;
+  --cream:  #f7f2ea;  --cream2: #ede8df; --cream3: #e3ddd3;
+  --forest: #1a3d2b;  --forest2: #24512e; --forest3: #2e6640;
+  --sage:   #e4ede6;
+  --saffron:#d4711e;  --saffron2:#b85e12;
+  --gold:   #c9a227;  --gold2: #e2b93a;  --gold-light:#fdf6e3;
+  --navy:   #091c3a;  --navy2: #122447;
+  --border: #cdc7bc;  --border2:#b8b2a6;
+  --serif:  'Playfair Display', Georgia, serif;
+  --sans:   'DM Sans', sans-serif;
+  --mono:   'DM Mono', monospace;
+  --r-sm:8px; --r-md:12px; --r-lg:16px; --r-xl:20px;
+  --sh: 0 1px 3px rgba(14,26,15,.06), 0 4px 16px rgba(14,26,15,.05);
+  --sh-up: 0 4px 20px rgba(14,26,15,.12), 0 12px 40px rgba(14,26,15,.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; padding-bottom: 80px; }
+
+/* noise texture */
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ════════════════════════════════════
+   OPENING ANIMATION
+════════════════════════════════════ */
+#opening {
+  position: fixed; inset: 0; z-index: 9999; background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+#opening.away { animation: openOut .7s ease .1s forwards; }
+.op-symbols { display: flex; gap: 20px; margin-bottom: 24px; }
+.op-sym {
+  font-size: 28px; opacity: 0; transform: translateY(18px);
+  animation: symUp .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+.op-sym:nth-child(1){animation-delay:.1s;color:var(--gold2)}
+.op-sym:nth-child(2){animation-delay:.2s;color:rgba(255,255,255,.9)}
+.op-sym:nth-child(3){animation-delay:.3s;color:var(--gold2)}
+.op-sym:nth-child(4){animation-delay:.4s;color:rgba(255,255,255,.9)}
+.op-logo { font-family:var(--serif); font-size:34px; font-weight:700; color:#fff; opacity:0; animation: fadeUp .5s ease .7s forwards; }
+.op-logo em { color: var(--gold2); font-style: normal; }
+.op-tag { font-family:var(--mono); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:rgba(201,162,39,.55); opacity:0; animation: fadeUp .4s ease .85s forwards; margin-top:6px; }
+.op-bar { width:100px; height:1.5px; background:rgba(255,255,255,.08); margin-top:20px; border-radius:2px; overflow:hidden; opacity:0; animation: fadeUp .3s ease 1s forwards; }
+.op-bar-fill { height:100%; background:var(--gold2); animation: barW 1.3s ease 1.05s forwards; width:0; }
+@keyframes symUp  { to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp { to { opacity:1; } }
+@keyframes barW   { to { width:100%; } }
+@keyframes openOut{ to { opacity:0; pointer-events:none; visibility:hidden; } }
+@keyframes cardIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ════════════════════════════════════
+   NAV
+════════════════════════════════════ */
+.nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--forest); height: 62px; padding: 0 5vw;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2.5px solid var(--saffron);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 21px; font-weight: 700; color: var(--cream);
+  letter-spacing: -.3px; cursor: pointer; user-select: none;
+  display: flex; align-items: baseline; gap: 3px;
+}
+.nav-logo sup { font-family:var(--mono); font-size:8px; font-weight:400; color:var(--saffron); letter-spacing:1.5px; text-transform:uppercase; margin-left:2px; vertical-align:super; }
+.nav-right { display: flex; align-items: center; gap: 8px; }
+.nav-link  { color:rgba(247,242,234,.6); font-size:12.5px; text-decoration:none; transition:color .2s; display:none; padding:4px 6px; }
+.nav-link:hover { color: var(--cream); }
+@media(min-width:600px) { .nav-link { display:inline; } }
+.btn-nav-cta  { background:var(--saffron); color:#fff; font-size:12.5px; font-weight:500; padding:8px 16px; border-radius:6px; border:none; cursor:pointer; transition:background .2s; white-space:nowrap; font-family:var(--sans); }
+.btn-nav-cta:hover { background: var(--saffron2); }
+.btn-nav-gold { background:var(--gold); color:var(--navy); font-size:12px; font-weight:600; padding:7px 14px; border-radius:6px; border:none; cursor:pointer; transition:background .2s; white-space:nowrap; font-family:var(--sans); }
+.btn-nav-gold:hover { background: var(--gold2); }
+.btn-ghost   { background:transparent; color:rgba(247,242,234,.3); font-size:12px; padding:5px 8px; border-radius:4px; border:1px solid rgba(247,242,234,.1); cursor:pointer; transition:all .2s; }
+.btn-ghost:hover { color:rgba(247,242,234,.7); border-color:rgba(247,242,234,.25); }
+.btn-ghost.admin-active { color:var(--gold2); border-color:var(--gold); }
+
+/* ════════════════════════════════════
+   DISCLAIMER + TICKER
+════════════════════════════════════ */
+.disc-strip {
+  background:var(--sage); border-bottom:1px solid #c8d9cc;
+  padding:7px 5vw; font-size:11px; color:var(--forest3);
+  font-family:var(--mono); text-align:center; line-height:1.5; position:relative; z-index:1;
+}
+
+.ticker-wrap {
+  background:var(--navy); border-bottom:1.5px solid rgba(201,162,39,.4);
+  height:36px; display:flex; align-items:center; overflow:hidden; position:relative; z-index:1;
+}
+.ticker-pill {
+  background:var(--gold); color:var(--navy); font-family:var(--mono); font-size:9px;
+  font-weight:500; letter-spacing:1.5px; text-transform:uppercase; padding:0 12px;
+  height:100%; display:flex; align-items:center; flex-shrink:0; white-space:nowrap;
+}
+.ticker-live-dot {
+  width:6px; height:6px; border-radius:50%; background:#4ade80;
+  margin-left:4px; flex-shrink:0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.ticker-outer { flex:1; overflow:hidden; }
+.ticker-track { display:flex; animation:scroll 50s linear infinite; width:max-content; }
+.ticker-track:hover { animation-play-state:paused; }
+.tick-item {
+  display:flex; align-items:center; gap:7px; padding:0 24px;
+  border-right:1px solid rgba(201,162,39,.15); height:36px; white-space:nowrap;
+}
+.tick-pair { font-family:var(--mono); font-size:10px; color:rgba(201,162,39,.6); letter-spacing:.8px; }
+.tick-val  { font-family:var(--mono); font-size:12px; font-weight:500; color:#fff; }
+.tick-ch   { font-family:var(--mono); font-size:9px; padding:1px 5px; border-radius:2px; }
+.tick-up   { background:rgba(74,222,128,.12); color:#4ade80; }
+.tick-dn   { background:rgba(248,113,113,.12); color:#f87171; }
+.ticker-note { font-family:var(--mono); font-size:9px; letter-spacing:1px; color:rgba(201,162,39,.4); padding-right:14px; flex-shrink:0; }
+@keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ════════════════════════════════════
+   HERO
+════════════════════════════════════ */
+.hero { padding:60px 5vw 48px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
+.hero-label {
+  display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:10px;
+  letter-spacing:2px; text-transform:uppercase; color:var(--saffron);
+  border:1px solid var(--saffron); padding:4px 12px; border-radius:20px; margin-bottom:22px;
+}
+.hero-label::before { content:''; display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--saffron); }
+.hero h1 { font-family:var(--serif); font-size:clamp(30px,5vw,52px); font-weight:700; line-height:1.08; color:var(--forest); max-width:580px; margin-bottom:16px; }
+.hero h1 i { font-style:italic; color:var(--saffron); }
+.hero-sub { font-size:15.5px; color:var(--ink2); max-width:460px; line-height:1.7; margin-bottom:30px; }
+.hero-cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:40px; }
+.btn-primary  { background:var(--forest); color:var(--cream); font-size:14px; font-weight:500; padding:13px 26px; border-radius:8px; border:none; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:7px; font-family:var(--sans); }
+.btn-primary:hover { background:var(--forest2); transform:translateY(-2px); box-shadow:0 4px 16px rgba(26,61,43,.25); }
+.btn-secondary { background:transparent; color:var(--forest); font-size:14px; font-weight:500; padding:12px 24px; border-radius:8px; border:2px solid var(--forest); cursor:pointer; transition:all .2s; font-family:var(--sans); }
+.btn-secondary:hover { background:var(--sage); }
+.hero-stats { display:flex; gap:36px; flex-wrap:wrap; }
+.h-stat { border-left:2px solid var(--saffron); padding-left:14px; }
+.h-stat-num { font-family:var(--serif); font-size:28px; font-weight:700; color:var(--forest); line-height:1; }
+.h-stat-lbl { font-size:11px; color:var(--ink3); margin-top:2px; }
+
+/* ════════════════════════════════════
+   SEARCH BAR + FILTERS
+════════════════════════════════════ */
+.search-bar {
+  background:var(--cream2); border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+  padding:16px 5vw; position:relative; z-index:90;
+}
+.search-inner { max-width:1200px; margin:0 auto; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.search-box {
+  flex:1; min-width:200px; display:flex; align-items:center;
+  background:#fff; border:1.5px solid var(--border2); border-radius:9px; overflow:hidden; transition:border-color .2s;
+}
+.search-box:focus-within { border-color: var(--forest3); }
+.s-icon  { padding:0 11px; color:var(--ink3); font-size:15px; }
+.s-input { flex:1; padding:10px 0; font-family:var(--sans); font-size:13.5px; color:var(--ink); background:transparent; border:none; outline:none; }
+.s-input::placeholder { color: var(--ink3); }
+.s-select {
+  padding:10px 14px; font-family:var(--mono); font-size:12px; color:var(--ink2);
+  background:#fff; border:1.5px solid var(--border2); border-radius:9px; outline:none; cursor:pointer; transition:border-color .2s;
+}
+.s-select:focus { border-color: var(--forest3); }
+/* Currency selector — prominent */
+.cur-selector {
+  display:flex; align-items:center; gap:8px; background:var(--gold-light);
+  border:1.5px solid var(--gold); border-radius:9px; padding:8px 14px;
+}
+.cur-selector label { font-family:var(--mono); font-size:10px; letter-spacing:1px; text-transform:uppercase; color:var(--navy); white-space:nowrap; }
+.cur-select {
+  font-family:var(--mono); font-size:13px; font-weight:500; color:var(--navy);
+  background:transparent; border:none; outline:none; cursor:pointer;
+}
+.s-btn { background:var(--forest); color:var(--cream); font-size:13px; font-weight:500; padding:10px 20px; border-radius:8px; border:none; cursor:pointer; transition:background .2s; white-space:nowrap; font-family:var(--sans); }
+.s-btn:hover { background:var(--forest2); }
+
+/* live rate banner */
+.live-banner {
+  background:var(--navy); padding:6px 5vw; font-family:var(--mono); font-size:11px;
+  color:rgba(255,255,255,.55); display:flex; align-items:center; gap:8px; position:relative; z-index:89;
+}
+.live-banner .dot { width:6px; height:6px; border-radius:50%; background:#4ade80; flex-shrink:0; animation:pulse 2s infinite; }
+.live-banner strong { color:var(--gold2); }
+
+.filters {
+  background:var(--cream2); border-bottom:1px solid var(--border);
+  padding:11px 5vw; position:sticky; top:62px; z-index:88;
+}
+.filters-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+.f-label { font-size:10.5px; font-weight:500; color:var(--ink3); letter-spacing:.5px; text-transform:uppercase; margin-right:4px; white-space:nowrap; font-family:var(--mono); }
+.chip { padding:5px 13px; border-radius:20px; border:1px solid var(--border2); background:transparent; color:var(--ink2); font-family:var(--sans); font-size:12px; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.chip:hover { border-color:var(--forest3); color:var(--forest3); }
+.chip.on { background:var(--forest); color:var(--cream); border-color:var(--forest); }
+.f-count { margin-left:auto; font-size:11.5px; color:var(--ink3); font-family:var(--mono); white-space:nowrap; }
+
+/* ════════════════════════════════════
+   LISTING GRID
+════════════════════════════════════ */
+.main { max-width:1200px; margin:0 auto; padding:28px 5vw 80px; position:relative; z-index:1; }
+.sort-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px; }
+.sort-lbl { font-size:12.5px; color:var(--ink3); }
+.sort-pills { display:flex; gap:5px; flex-wrap:wrap; }
+.s-pill { padding:4px 12px; border-radius:4px; border:1px solid var(--border); background:transparent; color:var(--ink3); font-size:11px; font-family:var(--mono); cursor:pointer; transition:all .15s; }
+.s-pill.on { border-color:var(--forest2); color:var(--forest2); background:var(--sage); }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:15px; }
+
+/* ════════════════════════════════════
+   DEALER CARDS
+════════════════════════════════════ */
+.dcard {
+  background:#fff; border:1px solid var(--border); border-radius:var(--r-lg);
+  padding:20px; cursor:pointer; position:relative; overflow:hidden;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  animation:cardIn .45s ease both;
+}
+.dcard:hover { transform:translateY(-3px); box-shadow:var(--sh-up); border-color:var(--forest3); }
+.dcard.featured { border-color:var(--saffron); border-width:1.5px; }
+.ribbon { position:absolute; top:0; right:0; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; padding:4px 12px; text-transform:uppercase; }
+.ribbon-feat { background:var(--saffron); color:#fff; border-radius:0 var(--r-lg) 0 7px; }
+.ribbon-live { background:var(--gold); color:var(--navy); border-radius:0 var(--r-lg) 0 7px; font-weight:600; }
+
+.c-top { display:flex; gap:13px; align-items:flex-start; margin-bottom:13px; }
+.c-logo { width:46px; height:46px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:15px; font-weight:700; flex-shrink:0; }
+.c-logo-green  { background:var(--forest); color:var(--cream); }
+.c-logo-navy   { background:var(--navy); color:var(--cream); }
+.c-logo-purple { background:#3d1a6e; color:#fff; }
+.c-logo-gold   { background:var(--navy2); color:var(--gold2); }
+.c-meta { flex:1; min-width:0; }
+.c-name  { font-family:var(--serif); font-size:16px; font-weight:600; color:var(--ink); line-height:1.2; margin-bottom:2px; }
+.c-type  { font-size:10.5px; font-family:var(--mono); color:var(--ink3); letter-spacing:.5px; text-transform:uppercase; }
+.c-city  { font-size:11.5px; color:var(--ink3); margin-top:3px; display:flex; align-items:center; gap:4px; }
+.c-city::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--forest3); flex-shrink:0; }
+
+.c-tags { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:12px; }
+.ctag   { font-size:9.5px; font-family:var(--mono); padding:2px 7px; border-radius:4px; border:1px solid var(--border); color:var(--ink3); }
+.ctag-v { border-color:#c2d8c8; color:var(--forest3); background:var(--sage); }
+.ctag-l { border-color:var(--gold); color:var(--navy); background:var(--gold-light); }
+
+.c-rate {
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--cream); border-radius:7px; padding:9px 12px; margin-bottom:11px;
+}
+.c-rate-pair { font-family:var(--mono); font-size:10px; color:var(--ink3); letter-spacing:.4px; }
+.c-rate-val  { font-family:var(--mono); font-size:17px; font-weight:500; color:var(--forest); }
+.c-rate-live { font-family:var(--mono); font-size:8px; color:#4ade80; margin-top:1px; }
+.c-spread    { font-family:var(--mono); font-size:9.5px; padding:2px 6px; border-radius:3px; }
+.sp-good  { background:#d4edd9; color:#1a5a2a; }
+.sp-mid   { background:#fde8cc; color:#7a3d07; }
+.sp-hi    { background:#fde3e3; color:#8b1a1a; }
+
+.c-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.c-rating { display:flex; align-items:center; gap:5px; }
+.c-stars  { color:var(--saffron); font-size:11px; }
+.c-rct    { font-size:10.5px; color:var(--ink3); font-family:var(--mono); }
+.c-call-btn {
+  display:flex; align-items:center; gap:6px; background:var(--forest); color:var(--cream);
+  font-size:12px; font-weight:500; padding:7px 14px; border-radius:6px; border:none; cursor:pointer;
+  transition:all .2s; white-space:nowrap; font-family:var(--sans); text-decoration:none;
+}
+.c-call-btn:hover { background:var(--saffron); transform:scale(1.03); }
+.c-call-btn svg { width:12px; height:12px; fill:currentColor; }
+.c-view-lnk { font-size:11.5px; font-weight:500; color:var(--forest3); display:flex; align-items:center; gap:3px; transition:gap .2s; }
+.dcard:hover .c-view-lnk { gap:7px; }
+.c-view-lnk::after { content:'→'; }
+.no-results { text-align:center; padding:60px 20px; grid-column:1/-1; color:var(--ink3); }
+
+/* ════════════════════════════════════
+   DETAIL PANEL
+════════════════════════════════════ */
+#det-panel { display:none; position:fixed; inset:0; z-index:6000; background:#f4f7f4; overflow-y:auto; }
+#det-panel.open { display:block; animation:slideIn .28s ease; }
+@keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+.det-nav {
+  position:sticky; top:0; z-index:10; background:var(--navy); height:56px;
+  display:flex; align-items:center; justify-content:space-between; padding:0 5vw;
+  border-bottom:1.5px solid rgba(201,162,39,.4);
+}
+.det-nav-logo { font-family:var(--serif); font-size:18px; font-weight:700; color:#fff; }
+.det-nav-logo em { color:var(--gold2); font-style:normal; }
+.det-back {
+  background:rgba(255,255,255,.08); color:rgba(255,255,255,.75);
+  border:1px solid rgba(255,255,255,.15); padding:6px 14px; border-radius:6px;
+  font-size:12.5px; cursor:pointer; transition:background .2s;
+  display:flex; align-items:center; gap:5px; font-family:var(--sans);
+}
+.det-back:hover { background:rgba(255,255,255,.16); }
+.det-body { max-width:1040px; margin:0 auto; padding:28px 5vw 80px; }
+.det-layout { display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start; }
+@media(max-width:740px) { .det-layout { grid-template-columns:1fr; } }
+
+.det-header {
+  background:#fff; border:1px solid #dde4dd; border-radius:var(--r-xl);
+  padding:26px; margin-bottom:18px; display:flex; gap:18px; align-items:flex-start;
+}
+.det-av { width:68px; height:68px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:24px; font-weight:700; flex-shrink:0; }
+.det-av-g  { background:var(--forest); color:#fff; }
+.det-av-n  { background:var(--navy); color:#fff; }
+.det-av-p  { background:#3d1a6e; color:#fff; }
+.det-av-lv { background:var(--navy2); color:var(--gold2); }
+.det-title    { font-family:var(--serif); font-size:clamp(19px,3vw,26px); font-weight:700; color:var(--navy); line-height:1.15; margin-bottom:4px; }
+.det-subtitle { font-size:11px; color:var(--ink3); font-family:var(--mono); letter-spacing:.5px; text-transform:uppercase; margin-bottom:5px; }
+.det-location { font-size:13.5px; color:#64748b; display:flex; align-items:center; gap:5px; }
+
+.det-card { background:#fff; border:1px solid #dde4dd; border-radius:var(--r-lg); padding:20px; margin-bottom:16px; }
+.det-ct   { font-family:var(--serif); font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; padding-bottom:9px; border-bottom:1px solid #f0f4f0; }
+.det-row  { display:flex; justify-content:space-between; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f7faf7; }
+.det-row:last-child { border-bottom:none; }
+.det-rl   { font-size:10.5px; color:#94a3b8; font-family:var(--mono); letter-spacing:.3px; text-transform:uppercase; flex-shrink:0; margin-right:12px; }
+.det-rv   { font-size:13.5px; color:var(--ink); font-weight:500; text-align:right; }
+.svc-chips { display:flex; flex-wrap:wrap; gap:7px; }
+.svc-chip {
+  padding:6px 13px; border-radius:20px; border:1.5px solid var(--gold); background:var(--gold-light);
+  color:var(--navy); font-size:12.5px; font-weight:500; display:flex; align-items:center; gap:5px;
+}
+.svc-chip::before { content:'✓'; color:#16a34a; font-weight:700; font-size:10px; }
+.det-rate-box {
+  background:var(--cream); border-radius:9px; padding:13px 15px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.det-rate-lbl { font-family:var(--mono); font-size:10.5px; color:var(--ink3); letter-spacing:.4px; }
+.det-rate-num { font-family:var(--mono); font-size:21px; font-weight:500; color:var(--forest); }
+.det-disc {
+  background:#fffbeb; border:1px solid #fde68a; border-radius:10px;
+  padding:13px 16px; font-size:11px; color:#92400e; line-height:1.65; font-family:var(--mono);
+}
+
+/* ════════════════════════════════════
+   CONTACT CARD (hero of detail page)
+════════════════════════════════════ */
+.contact-card {
+  background:var(--navy); border-radius:var(--r-xl); overflow:hidden;
+  box-shadow:0 20px 56px rgba(9,28,58,.35); position:sticky; top:72px;
+}
+.cc-head { padding:22px 22px 16px; border-bottom:1px solid rgba(201,162,39,.18); text-align:center; }
+.cc-icon  { font-size:28px; margin-bottom:4px; }
+.cc-title { font-family:var(--serif); font-size:19px; font-weight:700; color:#fff; margin-bottom:3px; }
+.cc-sub   { font-size:11.5px; color:rgba(255,255,255,.45); line-height:1.5; }
+
+.cc-call {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:var(--gold); color:var(--navy); padding:18px 22px; font-weight:700;
+  font-size:15px; text-decoration:none; transition:background .2s; cursor:pointer;
+  border:none; width:100%; font-family:var(--sans);
+  border-bottom:1px solid rgba(201,162,39,.25);
+}
+.cc-call:hover { background:var(--gold2); }
+.cc-call-icon { font-size:18px; }
+.cc-email {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:rgba(255,255,255,.06); color:#fff; padding:12px 22px; font-weight:500;
+  font-size:13.5px; text-decoration:none; transition:background .2s;
+  border-bottom:1px solid rgba(255,255,255,.06); cursor:pointer;
+  border:none; width:100%; font-family:var(--sans);
+}
+.cc-email:hover { background:rgba(255,255,255,.11); }
+.cc-wa {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:rgba(37,211,102,.1); color:#4ade80; padding:12px 22px;
+  font-size:13.5px; font-weight:500; text-decoration:none; transition:background .2s;
+  border-bottom:1px solid rgba(255,255,255,.05); cursor:pointer;
+  border:none; width:100%; font-family:var(--sans);
+}
+.cc-wa:hover { background:rgba(37,211,102,.18); }
+.cc-details  { padding:16px 20px; display:flex; flex-direction:column; gap:11px; }
+.cc-drow     { display:flex; gap:10px; align-items:flex-start; }
+.cc-drow-ic  { font-size:14px; flex-shrink:0; margin-top:2px; }
+.cc-drow-lbl { font-size:9.5px; color:rgba(255,255,255,.38); font-family:var(--mono); letter-spacing:.8px; text-transform:uppercase; margin-bottom:1px; }
+.cc-drow-val { font-size:12.5px; color:#fff; font-weight:500; word-break:break-all; text-decoration:none; }
+a.cc-drow-val:hover { color:var(--gold2); }
+.cc-no-contact { padding:20px; text-align:center; color:rgba(255,255,255,.3); font-size:12.5px; font-family:var(--mono); }
+.cc-trust { padding:12px 20px 16px; font-size:10px; color:rgba(255,255,255,.28); line-height:1.6; font-family:var(--mono); text-align:center; border-top:1px solid rgba(255,255,255,.05); }
+.cc-back-btn { width:100%; margin-top:10px; background:transparent; border:1.5px solid #cfd8d0; color:#64748b; padding:11px; border-radius:8px; cursor:pointer; font-size:12.5px; transition:all .2s; font-family:var(--sans); }
+.cc-back-btn:hover { border-color:#94a3b8; color:#334155; }
+
+/* ════════════════════════════════════
+   LEAD FLASH
+════════════════════════════════════ */
+.lead-flash {
+  position:fixed; bottom:90px; right:20px; z-index:9000;
+  background:var(--forest); color:var(--cream); font-family:var(--mono); font-size:11px;
+  padding:9px 16px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,.2);
+  opacity:0; transform:translateY(10px); transition:all .3s ease; pointer-events:none;
+}
+.lead-flash.show { opacity:1; transform:translateY(0); }
+
+/* ════════════════════════════════════
+   CTA BANNER
+════════════════════════════════════ */
+.cta-banner {
+  background:var(--forest); border-radius:var(--r-xl); padding:36px; margin:44px 0 0;
+  display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center;
+}
+@media(max-width:600px) { .cta-banner { grid-template-columns:1fr; } }
+.cta-banner h2 { font-family:var(--serif); font-size:24px; font-weight:700; color:var(--cream); margin-bottom:6px; }
+.cta-banner p  { font-size:13.5px; color:rgba(247,242,234,.65); line-height:1.6; }
+.cta-btn { background:var(--saffron); color:#fff; font-size:13.5px; font-weight:500; padding:12px 22px; border-radius:8px; border:none; cursor:pointer; white-space:nowrap; transition:background .2s; font-family:var(--sans); }
+.cta-btn:hover { background:var(--saffron2); }
+
+/* ════════════════════════════════════
+   LYB MODAL
+════════════════════════════════════ */
+.overlay {
+  position:fixed; inset:0; z-index:8000; background:rgba(6,19,43,.82);
+  backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center;
+  padding:20px; opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.overlay.open { opacity:1; pointer-events:all; }
+.lyb-box {
+  background:#fff; border-radius:var(--r-xl); width:100%; max-width:540px;
+  max-height:90vh; overflow-y:auto; position:relative;
+  transform:translateY(18px) scale(.98); transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 24px 80px rgba(6,19,43,.4);
+}
+.overlay.open .lyb-box { transform:translateY(0) scale(1); }
+.lyb-head { background:var(--navy); padding:26px 26px 22px; border-radius:var(--r-xl) var(--r-xl) 0 0; position:relative; }
+.lyb-close { position:absolute; top:14px; right:14px; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,.1); border:none; cursor:pointer; color:rgba(255,255,255,.6); font-size:16px; display:flex; align-items:center; justify-content:center; transition:background .2s; }
+.lyb-close:hover { background:rgba(255,255,255,.2); }
+.lyb-head h2 { font-family:var(--serif); font-size:21px; font-weight:700; color:#fff; margin-bottom:3px; }
+.lyb-head p  { font-size:12.5px; color:rgba(255,255,255,.5); line-height:1.5; }
+.gold-bar { height:2px; background:linear-gradient(90deg, var(--gold) 0%, transparent 100%); }
+.lyb-form-body { padding:24px 26px 26px; }
+.f-row { margin-bottom:15px; }
+.f-row label { display:block; font-size:10.5px; font-weight:500; color:#4a5568; letter-spacing:.5px; text-transform:uppercase; margin-bottom:5px; font-family:var(--mono); }
+.f-row input,.f-row textarea { width:100%; padding:10px 13px; border:1.5px solid #d0d8eb; border-radius:7px; font-family:var(--sans); font-size:13.5px; color:#0c1a30; background:#fff; transition:border-color .2s; outline:none; }
+.f-row input:focus,.f-row textarea:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(9,28,58,.07); }
+.f-row textarea { resize:vertical; min-height:72px; }
+.f-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:460px) { .f-grid { grid-template-columns:1fr; } }
+.svc-sel { display:flex; flex-wrap:wrap; gap:7px; margin-top:5px; }
+.svc-sel button { padding:5px 11px; border-radius:20px; border:1.5px solid #d0d8eb; background:transparent; color:#4a5568; font-size:11.5px; cursor:pointer; transition:all .15s; font-family:var(--sans); }
+.svc-sel button.sel { background:var(--navy); color:#fff; border-color:var(--navy); }
+.lyb-submit { width:100%; padding:13px; background:var(--navy); color:#fff; border:none; border-radius:9px; font-family:var(--sans); font-size:14.5px; font-weight:500; cursor:pointer; transition:all .2s; margin-top:4px; }
+.lyb-submit:hover { background:var(--navy2); transform:translateY(-1px); }
+.lyb-submit:disabled { background:#9aa5b4; cursor:not-allowed; transform:none; }
+.lyb-success { padding:44px 26px; text-align:center; display:none; }
+.lyb-success.show { display:block; }
+.lyb-success-ico { width:60px; height:60px; border-radius:50%; background:var(--sage); margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-size:26px; }
+.lyb-success h3 { font-family:var(--serif); font-size:21px; font-weight:700; color:var(--ink); margin-bottom:7px; }
+.lyb-success p  { font-size:13.5px; color:var(--ink2); line-height:1.6; }
+.f-note { font-size:10.5px; color:#64748b; font-family:var(--mono); margin-top:13px; padding-top:12px; border-top:1px solid #e2e8f0; text-align:center; line-height:1.6; }
+.f-err  { display:none; background:#fff0f0; border:1px solid #fca5a5; border-radius:7px; padding:10px 12px; font-size:12.5px; color:#b91c1c; margin-bottom:12px; }
+
+/* ════════════════════════════════════
+   ADMIN PANEL
+════════════════════════════════════ */
+#admin-panel { display:none; position:fixed; inset:0; z-index:7000; background:#f1f5f9; overflow-y:auto; font-family:var(--sans); }
+#admin-panel.open { display:block; }
+.adm-login-wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--navy); }
+.adm-login-box { background:#fff; border-radius:var(--r-xl); padding:38px; width:360px; box-shadow:0 24px 80px rgba(0,0,0,.35); }
+.adm-login-logo { font-family:var(--serif); font-size:20px; font-weight:700; color:var(--navy); margin-bottom:3px; }
+.adm-login-logo em { color:var(--gold); font-style:normal; }
+.adm-login-sub { font-size:12.5px; color:#64748b; margin-bottom:22px; }
+.adm-inp { width:100%; padding:10px 13px; border:1.5px solid #d0d8eb; border-radius:7px; font-size:13.5px; margin-bottom:11px; outline:none; transition:border-color .2s; font-family:var(--sans); }
+.adm-inp:focus { border-color: var(--navy); }
+.adm-submit { width:100%; padding:12px; background:var(--navy); color:#fff; border:none; border-radius:7px; font-size:13.5px; font-weight:500; cursor:pointer; transition:background .2s; font-family:var(--sans); }
+.adm-submit:hover { background:var(--navy2); }
+.adm-err  { background:#fff0f0; border:1px solid #fca5a5; border-radius:6px; padding:9px 12px; font-size:11.5px; color:#b91c1c; margin-bottom:11px; display:none; }
+.adm-back { font-size:11.5px; color:#94a3b8; text-align:center; margin-top:12px; cursor:pointer; font-family:var(--mono); }
+.adm-back:hover { color:#64748b; }
+.adm-dash { max-width:1060px; margin:0 auto; padding:26px 22px 80px; }
+.adm-topbar { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; gap:14px; flex-wrap:wrap; }
+.adm-topbar h1 { font-family:var(--serif); font-size:23px; font-weight:700; color:var(--navy); }
+.adm-topbar p  { font-size:12.5px; color:#64748b; margin-top:2px; }
+.adm-top-r { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+.adm-fetch-btn { padding:9px 18px; background:var(--gold); color:var(--navy); border:none; border-radius:7px; font-size:12.5px; font-weight:600; cursor:pointer; transition:background .2s; white-space:nowrap; font-family:var(--sans); }
+.adm-fetch-btn:hover { background:var(--gold2); }
+.adm-fetch-btn:disabled { background:#e2d89a; cursor:not-allowed; }
+.adm-sm-btn { padding:7px 15px; background:transparent; color:#64748b; border:1.5px solid #e2e8f0; border-radius:6px; font-size:12.5px; cursor:pointer; transition:all .2s; white-space:nowrap; font-family:var(--sans); }
+.adm-sm-btn:hover { border-color:#94a3b8; color:#334155; }
+.adm-stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:11px; margin-bottom:22px; }
+.adm-sbox { background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:15px 17px; }
+.adm-sbox .n { font-family:var(--serif); font-size:28px; font-weight:700; color:var(--navy); line-height:1; }
+.adm-sbox .l { font-size:10.5px; color:#94a3b8; margin-top:2px; font-family:var(--mono); }
+.adm-alert-box { padding:11px 14px; border-radius:7px; font-size:12.5px; margin-bottom:14px; display:none; }
+.adm-alert-box.show { display:block; }
+.adm-alert-box.ok  { background:#d1fae5; border:1px solid #6ee7b7; color:#065f46; }
+.adm-alert-box.err { background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; }
+.adm-tabs { display:flex; gap:7px; margin-bottom:18px; flex-wrap:wrap; }
+.adm-tab  { padding:7px 18px; border-radius:20px; border:1.5px solid #e2e8f0; background:#fff; color:#64748b; font-size:12.5px; cursor:pointer; transition:all .15s; font-family:var(--sans); display:flex; align-items:center; gap:5px; }
+.adm-tab.on { background:var(--navy); color:#fff; border-color:var(--navy); }
+.adm-tc   { background:#e2e8f0; color:#64748b; font-size:9.5px; font-family:var(--mono); padding:1px 7px; border-radius:10px; }
+.adm-tab.on .adm-tc { background:rgba(255,255,255,.2); color:#fff; }
+.adm-card { background:#fff; border:1px solid #e2e8f0; border-radius:11px; padding:17px 19px; margin-bottom:9px; display:flex; align-items:flex-start; gap:13px; transition:box-shadow .2s; }
+.adm-card:hover { box-shadow:0 4px 18px rgba(9,28,58,.07); }
+.adm-av  { width:42px; height:42px; border-radius:9px; background:var(--navy); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:14px; font-weight:700; color:#fff; flex-shrink:0; }
+.adm-cb  { flex:1; min-width:0; }
+.adm-cn  { font-size:15px; font-weight:600; color:var(--navy); margin-bottom:3px; font-family:var(--serif); }
+.adm-cm  { display:flex; gap:12px; flex-wrap:wrap; font-size:11.5px; color:#64748b; margin-bottom:4px; }
+.adm-cs  { font-size:10.5px; color:#94a3b8; font-family:var(--mono); margin-top:2px; }
+.adm-cmsg{ font-size:11.5px; color:#64748b; font-style:italic; margin-top:3px; }
+.adm-ct  { font-size:9.5px; color:#cbd5e1; font-family:var(--mono); margin-top:3px; }
+.adm-ca  { display:flex; gap:7px; align-items:center; flex-wrap:wrap; flex-shrink:0; margin-left:7px; }
+.adm-pill    { display:inline-block; padding:2px 9px; border-radius:10px; font-size:9.5px; font-family:var(--mono); font-weight:500; letter-spacing:.4px; }
+.pill-pend   { background:#fef3c7; color:#92400e; }
+.pill-live   { background:#d1fae5; color:#065f46; }
+.pill-rej    { background:#fee2e2; color:#991b1b; }
+.adm-approve { padding:7px 14px; background:#16a34a; color:#fff; border:none; border-radius:6px; font-size:11.5px; cursor:pointer; font-weight:500; transition:background .2s; font-family:var(--sans); }
+.adm-approve:hover { background:#15803d; }
+.adm-reject  { padding:7px 14px; background:transparent; color:#dc2626; border:1.5px solid #fca5a5; border-radius:6px; font-size:11.5px; cursor:pointer; transition:all .2s; font-family:var(--sans); }
+.adm-reject:hover { background:#fff0f0; }
+.adm-empty   { text-align:center; padding:52px 20px; color:#94a3b8; font-size:13.5px; }
+.adm-empty-ic{ font-size:30px; margin-bottom:10px; }
+.adm-note    { background:#fffbeb; border:1px solid #fde68a; border-radius:7px; padding:11px 14px; font-size:11.5px; color:#92400e; font-family:var(--mono); margin-bottom:14px; line-height:1.6; }
+.adm-lead-row{ display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f1f5f9; font-size:12.5px; }
+.adm-lead-row:last-child { border-bottom:none; }
+.adm-lead-name  { color:var(--navy); font-weight:500; }
+.adm-lead-counts{ display:flex; gap:10px; }
+.adm-lc { font-family:var(--mono); font-size:11px; padding:2px 8px; border-radius:4px; }
+.adm-lc-call  { background:#d1fae5; color:#065f46; }
+.adm-lc-email { background:#e0f2fe; color:#0369a1; }
+.adm-lc-view  { background:#f3f4f6; color:#374151; }
+
+/* ════════════════════════════════════
+   COMPLIANCE FOOTER
+════════════════════════════════════ */
+#comp-footer {
+  position:fixed; bottom:0; left:0; right:0; z-index:500;
+  background:var(--navy); border-top:1px solid rgba(201,162,39,.25);
+  padding:9px 5vw; transition:transform .3s ease;
+}
+#comp-footer.col { transform:translateY(calc(100% - 34px)); }
+.comp-toggle   { display:flex; align-items:center; justify-content:space-between; cursor:pointer; margin-bottom:7px; }
+.comp-toggle-l { display:flex; align-items:center; gap:7px; }
+.comp-badge    { background:var(--gold); color:var(--navy); font-family:var(--mono); font-size:7.5px; letter-spacing:1.5px; text-transform:uppercase; font-weight:500; padding:2px 7px; border-radius:3px; }
+.comp-ttl      { font-family:var(--mono); font-size:10.5px; color:rgba(201,162,39,.65); letter-spacing:.4px; }
+.comp-chev     { font-size:11px; color:rgba(201,162,39,.45); transition:transform .3s; }
+#comp-footer.col .comp-chev { transform:rotate(180deg); }
+.comp-text { font-size:10px; line-height:1.65; color:rgba(247,242,234,.38); font-family:var(--mono); max-height:76px; overflow:hidden; transition:max-height .3s, opacity .3s; }
+#comp-footer.col .comp-text { max-height:0; opacity:0; }
+.comp-text strong { color:rgba(201,162,39,.55); font-weight:500; }
+
+/* ════════════════════════════════════
+   FOOTER
+════════════════════════════════════ */
+footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw; font-size:11.5px; line-height:1.8; text-align:center; }
+.ft-logo { font-family:var(--serif); font-size:17px; font-weight:700; color:var(--cream); margin-bottom:10px; display:block; }
+.ft-disc { max-width:680px; margin:14px auto 0; font-size:10.5px; line-height:1.7; border-top:1px solid rgba(247,242,234,.08); padding-top:14px; }
+</style>
+</head>
+<body>
+
+<!-- OPENING -->
+<div id="opening" aria-hidden="true">
+  <div class="op-symbols">
+    <span class="op-sym">$</span><span class="op-sym">€</span>
+    <span class="op-sym">₹</span><span class="op-sym">£</span>
+  </div>
+  <div class="op-logo">Currency<em>Buddy</em></div>
+  <div class="op-tag">Find · Compare · Contact</div>
+  <div class="op-bar"><div class="op-bar-fill"></div></div>
+</div>
+
+<!-- LEAD FLASH -->
+<div class="lead-flash" id="leadFlash"></div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="adm-login-wrap" id="admLoginWrap">
+    <div class="adm-login-box">
+      <div class="adm-login-logo">Currency<em>Buddy</em></div>
+      <div class="adm-login-sub">Admin · Provider Management</div>
+      <div class="adm-err" id="admErr">Incorrect credentials.</div>
+      <input class="adm-inp" type="email" id="admEmail" placeholder="Admin email" autocomplete="email"/>
+      <input class="adm-inp" type="password" id="admPass" placeholder="Password" autocomplete="current-password"/>
+      <button class="adm-submit" onclick="adminLogin()">Sign in →</button>
+      <div class="adm-back" onclick="closeAdmin()">← Back to site</div>
+    </div>
+  </div>
+  <div class="adm-dash" id="admDash" style="display:none">
+    <div class="adm-topbar">
+      <div><h1>Provider Management</h1><p>Currency Buddy · Admin Dashboard</p></div>
+      <div class="adm-top-r">
+        <button class="adm-fetch-btn" id="fetchBtn" onclick="fetchFromAPI()">↓ Refresh Providers</button>
+        <button class="adm-sm-btn" onclick="closeAdmin()" style="color:var(--saffron);border-color:var(--saffron)">← View Site</button>
+        <button class="adm-sm-btn" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+    <div class="adm-stats">
+      <div class="adm-sbox"><div class="n" id="sPen">0</div><div class="l">Pending</div></div>
+      <div class="adm-sbox"><div class="n" id="sApp">0</div><div class="l">Live</div></div>
+      <div class="adm-sbox"><div class="n" id="sRej">0</div><div class="l">Rejected</div></div>
+      <div class="adm-sbox"><div class="n" id="sTotalLeads">0</div><div class="l">Total Leads</div></div>
+    </div>
+    <div class="adm-alert-box" id="admAlertBox"></div>
+    <div class="adm-tabs">
+      <button class="adm-tab on" onclick="switchTab('pending',this)">Pending <span class="adm-tc" id="tPen">0</span></button>
+      <button class="adm-tab" onclick="switchTab('active',this)">Live <span class="adm-tc" id="tApp">0</span></button>
+      <button class="adm-tab" onclick="switchTab('rejected',this)">Rejected <span class="adm-tc" id="tRej">0</span></button>
+      <button class="adm-tab" onclick="switchTab('leads',this)">Lead Tracker <span class="adm-tc" id="tLeads">0</span></button>
+    </div>
+    <div id="admList"></div>
+  </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div id="det-panel">
+  <nav class="det-nav">
+    <div class="det-nav-logo">Currency<em>Buddy</em></div>
+    <button class="det-back" onclick="closeDetail()">← All Providers</button>
+  </nav>
+  <div class="det-body" id="detBody"></div>
+</div>
+
+<!-- LYB OVERLAY -->
+<div class="overlay" id="lybOverlay" onclick="closeLYBOvr(event)">
+  <div class="lyb-box">
+    <div class="lyb-head">
+      <button class="lyb-close" onclick="closeLYB()">✕</button>
+      <h2>List Your Business</h2>
+      <p>Join verified forex dealers on Currency Buddy. Free listing, zero commission.</p>
+    </div>
+    <div class="gold-bar"></div>
+    <div class="lyb-success" id="lybOk">
+      <div class="lyb-success-ico">✓</div>
+      <h3>Request received!</h3>
+      <p>We'll review your details and add you to the directory within 1–2 business days.</p>
+    </div>
+    <div class="lyb-form-body" id="lybForm">
+      <div class="f-grid">
+        <div class="f-row"><label>Business Name *</label><input type="text" id="lyb-biz" placeholder="e.g. Sharma Forex" required/></div>
+        <div class="f-row"><label>Owner Name *</label><input type="text" id="lyb-owner" placeholder="Full name" required/></div>
+      </div>
+      <div class="f-grid">
+        <div class="f-row"><label>Phone *</label><input type="tel" id="lyb-phone" placeholder="+91 98XXX XXXXX" required/></div>
+        <div class="f-row"><label>Email *</label><input type="email" id="lyb-email" placeholder="you@biz.com" required/></div>
+      </div>
+      <div class="f-row"><label>Location *</label><input type="text" id="lyb-loc" placeholder="e.g. Connaught Place, Delhi" required/></div>
+      <div class="f-row">
+        <label>Services</label>
+        <div class="svc-sel" id="lybSvcs">
+          <button type="button" onclick="this.classList.toggle('sel')">Currency Exchange</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Wire Transfer</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Forex Card</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Doorstep Delivery</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Student Remittance</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Corporate Forex</button>
+          <button type="button" onclick="this.classList.toggle('sel')">Demand Draft</button>
+        </div>
+      </div>
+      <div class="f-row"><label>Message (optional)</label><textarea id="lyb-msg" placeholder="Tell us about your business..."></textarea></div>
+      <div class="f-err" id="lybErr">Something went wrong. Email <a href="mailto:hello@currencybuddy.in" style="color:#b91c1c">hello@currencybuddy.in</a></div>
+      <button type="button" class="lyb-submit" id="lybBtn" onclick="submitLYB()">Submit Listing Request →</button>
+      <p class="f-note">Free listing. No commission. By submitting you agree we may contact you to verify details.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ MAIN SITE ════════════ -->
+<nav class="nav">
+  <span class="nav-logo" id="logoTrigger">CurrencyBuddy<sup>Beta</sup></span>
+  <div class="nav-right">
+    <a href="#dealers" class="nav-link">Find Dealers</a>
+    <a href="#" class="nav-link" onclick="openLYB();return false">List Free</a>
+    <button class="btn-nav-gold" onclick="openLYB()">List Your Business</button>
+    <button class="btn-ghost" id="adminBtn" onclick="openAdmin()" title="Admin">⚙</button>
+  </div>
+</nav>
+
+<div class="disc-strip">
+  Rates shown are indicative mid-market references only · Not financial advice · Currency Buddy does not process transactions or hold funds
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-pill">Live Rates <span class="ticker-live-dot"></span></div>
+  <div class="ticker-outer"><div class="ticker-track" id="tickerTrack">Loading rates…</div></div>
+  <div class="ticker-note">INDICATIVE</div>
+</div>
+
+<div class="hero">
+  <div class="hero-label">Delhi NCR · Verified Forex Directory</div>
+  <h1>Find <i>Trusted</i> Currency Exchange Providers Near You</h1>
+  <p class="hero-sub">Get the best rates from verified forex dealers, banks, and remittance services. Contact directly — no middlemen, no hidden fees.</p>
+  <div class="hero-cta-row">
+    <button class="btn-primary" onclick="document.getElementById('dealers').scrollIntoView({behavior:'smooth'})">
+      🔍 Find Providers Near Me
+    </button>
+    <button class="btn-secondary" onclick="openLYB()">List Your Business</button>
+  </div>
+  <div class="hero-stats">
+    <div class="h-stat"><div class="h-stat-num" id="heroCount">15</div><div class="h-stat-lbl">Verified providers</div></div>
+    <div class="h-stat"><div class="h-stat-num">8</div><div class="h-stat-lbl">Currency pairs</div></div>
+    <div class="h-stat"><div class="h-stat-num">4</div><div class="h-stat-lbl">Delhi areas</div></div>
+  </div>
+</div>
+
+<div class="search-bar">
+  <div class="search-inner">
+    <div class="search-box">
+      <span class="s-icon">🔍</span>
+      <input class="s-input" id="searchInp" type="text" placeholder="Search by name, area, or service…" oninput="applyFS()"/>
+    </div>
+    <!-- CURRENCY SELECTOR — prominent -->
+    <div class="cur-selector">
+      <label for="curSel">Currency</label>
+      <select class="cur-select" id="curSel" onchange="onCurrencyChange()">
+        <option value="USD">USD 🇺🇸</option>
+        <option value="EUR">EUR 🇪🇺</option>
+        <option value="GBP">GBP 🇬🇧</option>
+        <option value="AED">AED 🇦🇪</option>
+        <option value="SGD">SGD 🇸🇬</option>
+        <option value="CAD">CAD 🇨🇦</option>
+        <option value="AUD">AUD 🇦🇺</option>
+      </select>
+    </div>
+    <select class="s-select" id="areaSel" onchange="applyFS()">
+      <option value="">All areas</option>
+      <option value="cp">Connaught Place</option>
+      <option value="gurgaon">Gurgaon</option>
+      <option value="noida">Noida</option>
+      <option value="online">Online</option>
+    </select>
+    <button class="s-btn" onclick="applyFS()">Search</button>
+  </div>
+</div>
+
+<div class="live-banner" id="liveBanner">
+  <span class="dot"></span>
+  <span>Live mid-market reference — </span>
+  <strong id="liveRateDisplay">1 USD = ₹83.59</strong>
+  <span id="liveRateTime" style="margin-left:auto;opacity:.5">—</span>
+</div>
+
+<div class="filters">
+  <div class="filters-inner">
+    <span class="f-label">Filter</span>
+    <button class="chip on"  onclick="setFilter('all',this)">All</button>
+    <button class="chip" onclick="setFilter('dealer',this)">Forex Dealers</button>
+    <button class="chip" onclick="setFilter('bank',this)">Banks</button>
+    <button class="chip" onclick="setFilter('online',this)">Online</button>
+    <button class="chip" onclick="setFilter('cp',this)">Connaught Place</button>
+    <button class="chip" onclick="setFilter('gurgaon',this)">Gurgaon</button>
+    <button class="chip" onclick="setFilter('noida',this)">Noida</button>
+    <span class="f-count" id="fCount">15 results</span>
+  </div>
+</div>
+
+<div class="main" id="dealers">
+  <div class="sort-row">
+    <span class="sort-lbl">Sort by</span>
+    <div class="sort-pills">
+      <button class="s-pill on" onclick="setSort('rate',this)">Best Rate</button>
+      <button class="s-pill"    onclick="setSort('trust',this)">Top Rated</button>
+      <button class="s-pill"    onclick="setSort('spread',this)">Tightest Spread</button>
+    </div>
+  </div>
+  <div class="grid" id="dealerGrid"></div>
+
+  <div class="cta-banner">
+    <div>
+      <h2>Are you a forex dealer?</h2>
+      <p>Join Currency Buddy's directory. Get discovered by students, freelancers, and travelers across Delhi NCR. Free listing, zero commission — providers pay only for leads.</p>
+    </div>
+    <button class="cta-btn" onclick="openLYB()">Get Listed Free →</button>
+  </div>
+</div>
+
+<footer>
+  <span class="ft-logo">CurrencyBuddy</span>
+  Delhi NCR · Mumbai · Bangalore (coming soon) · hello@currencybuddy.in
+  <div class="ft-disc">
+    Currency Buddy is a technology platform providing directory and information services only. We do not hold funds, process transactions, provide financial advice, or act as an intermediary in any forex transaction. All rates are indicative mid-market references and are not guaranteed transaction rates. © 2025 Currency Buddy Technologies Pvt. Ltd.
+  </div>
+</footer>
+
+<div id="comp-footer" class="col">
+  <div class="comp-toggle" onclick="toggleComp()">
+    <div class="comp-toggle-l">
+      <span class="comp-badge">Regulatory Disclosure</span>
+      <span class="comp-ttl">IT Platform · Not RBI/SEBI regulated</span>
+    </div>
+    <span class="comp-chev">▲</span>
+  </div>
+  <div class="comp-text">
+    Currency Buddy is a technology platform providing directory and information services only. We do not hold funds, process transactions, provide financial advice, or act as an intermediary in any forex transaction. All rates displayed are historical or indicative mid-market data and are <strong>NOT transaction rates</strong>. Actual rates set solely by the licensed provider. <strong>Not regulated</strong> by RBI, SEBI, or any financial authority. Operating as an IT company under the Information Technology Act, 2000.
+  </div>
+</div>
+
+<!-- ════════════ SCRIPTS ════════════ -->
+<script>
+'use strict';
+
+/* ══════════════════════════════
+   CONFIG — point to your backend
+   In production, set API_BASE to your server URL e.g. https://api.currencybuddy.in
+══════════════════════════════ */
+const API_BASE  = window.API_BASE || '';   // empty = same origin
+const WEBHOOK   = 'https://script.google.com/macros/s/AKfycbzt31oJ4lwAR6YlTxFCtkDoUd1ffUtRBuufx-l-J5sC1_IHVBaSG6K_tlR32QjOR1Tk/exec';
+const ADM_EMAIL = 'admin@currencybuddy.in';
+const ADM_PASS  = 'CurrencyBuddy@2025';
+const ADM_TOKEN = 'cb-admin-2025';
+
+/* ══════════════════════════════
+   STATIC FALLBACK DATA
+   Used when backend is not connected
+══════════════════════════════ */
+const STATIC_PROVIDERS = [
+  {id:1,slug:'thomas-cook-india',businessName:'Thomas Cook India',ini:'TC',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'Connaught Place, Delhi',area:'cp',phone:'+91-22-6160-3000',email:'forex@thomascook.in',website:'https://www.thomascook.in',services:'Currency Exchange,Forex Card,Doorstep Delivery,Travel Insurance,Wire Transfer',hours:'Mon–Sat 9:00–18:00',minAmount:500,maxAmount:250000,speed:'Same day',isFeatured:true,rating:4.6,reviewCount:2847,spread:0.19,tags:['Verified','Pan-India','Doorstep']},
+  {id:2,slug:'bookmyforex',businessName:'BookMyForex',ini:'BF',logoClass:'c-logo-purple',type:'online',typeLabel:'Online Platform',location:'Online · PAN India',area:'online',phone:'+91-11-4084-1111',email:'support@bookmyforex.com',website:'https://www.bookmyforex.com',services:'Currency Exchange,Forex Card,Rate Lock,Student Remittance',hours:'24/7 Online',minAmount:1000,maxAmount:1000000,speed:'2–4 hours',isFeatured:false,rating:4.8,reviewCount:5612,spread:0.07,tags:['Verified','Rate Lock','Zero Markup']},
+  {id:3,slug:'weizmann-forex',businessName:'Weizmann Forex',ini:'WF',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'Janpath, CP',area:'cp',phone:'+91-11-2332-5689',email:'delhi@weizmannforex.com',website:'https://www.weizmannforex.com',services:'Currency Exchange,Wire Transfer,SWIFT,Corporate Forex,Demand Draft',hours:'Mon–Sat 9:30–18:30',minAmount:1000,maxAmount:500000,speed:'Same day',isFeatured:false,rating:4.3,reviewCount:1124,spread:0.31,tags:['Verified','Bulk Orders','SWIFT']},
+  {id:4,slug:'hdfc-bank-forex',businessName:'HDFC Bank Forex',ini:'HD',logoClass:'c-logo-navy',type:'bank',typeLabel:'Scheduled Bank',location:'Connaught Place',area:'cp',phone:'1800-22-1006',email:'forex@hdfcbank.com',website:'https://www.hdfcbank.com/forex',services:'Currency Exchange,Forex Card,Wire Transfer,SWIFT,Travel Card',hours:'Mon–Fri 9:30–15:30, Sat 9:30–13:30',minAmount:5000,maxAmount:500000,speed:'1–3 business days',isFeatured:false,rating:4.1,reviewCount:14200,spread:0.70,tags:['Verified','Account Holders','SWIFT']},
+  {id:5,slug:'centrum-forex',businessName:'Centrum Forex',ini:'CF',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'DLF Cybercity, Gurgaon',area:'gurgaon',phone:'+91-124-483-9999',email:'gurgaon@centrumforex.com',website:'https://www.centrumforex.com',services:'Currency Exchange,Corporate Forex,Rate Lock,Doorstep Delivery',hours:'Mon–Sat 9:00–19:00',minAmount:500,maxAmount:200000,speed:'Same day',isFeatured:false,rating:4.4,reviewCount:876,spread:0.22,tags:['Verified','Gurgaon','Corporate']},
+  {id:6,slug:'icici-bank-forex',businessName:'ICICI Bank Forex',ini:'IC',logoClass:'c-logo-navy',type:'bank',typeLabel:'Scheduled Bank',location:'Nehru Place, Delhi',area:'other',phone:'1800-103-8181',email:'forex@icicibank.com',website:'https://www.icicibank.com/forex',services:'Currency Exchange,Travel Card,Multi-Currency Card,Wire Transfer',hours:'Mon–Fri 9:30–15:30',minAmount:3000,maxAmount:500000,speed:'1–2 business days',isFeatured:false,rating:4.0,reviewCount:9840,spread:0.58,tags:['Verified','Bank','Travel Card']},
+  {id:7,slug:'wise',businessName:'Wise (TransferWise)',ini:'WS',logoClass:'c-logo-purple',type:'online',typeLabel:'Remittance App',location:'Online · Global',area:'online',phone:null,email:'support@wise.com',website:'https://wise.com/in',services:'International Wire Transfer,Multi-Currency Account,Debit Card',hours:'24/7 Online',minAmount:100,maxAmount:5000000,speed:'1–2 business days',isFeatured:false,rating:4.9,reviewCount:38900,spread:0.04,tags:['Verified','Lowest Spread','Online Only']},
+  {id:8,slug:'paul-merchants',businessName:'Paul Merchants',ini:'PM',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'Sector 18, Noida',area:'noida',phone:'+91-120-433-7777',email:'noida@paulmerchants.net',website:'https://www.paulmerchants.net',services:'Currency Exchange,Student Remittance,Forex Card,Instant Cash',hours:'Mon–Sun 10:00–19:00',minAmount:200,maxAmount:100000,speed:'Instant',isFeatured:false,rating:4.3,reviewCount:421,spread:0.23,tags:['Verified','Noida','Student-Friendly']},
+  {id:9,slug:'axis-bank-forex',businessName:'Axis Bank Forex',ini:'AX',logoClass:'c-logo-navy',type:'bank',typeLabel:'Scheduled Bank',location:'Rajiv Chowk, CP',area:'cp',phone:'1800-419-5959',email:'forex@axisbank.com',website:'https://www.axisbank.com/forex',services:'Currency Exchange,Forex Card,Multi-Currency Prepaid Card',hours:'Mon–Fri 9:30–15:30',minAmount:2000,maxAmount:500000,speed:'1–2 business days',isFeatured:false,rating:4.0,reviewCount:7650,spread:0.53,tags:['Verified','Bank','Forex Card']},
+  {id:10,slug:'unimoni-financial',businessName:'Unimoni Financial',ini:'UF',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'Sector 29, Gurgaon',area:'gurgaon',phone:'+91-124-404-7000',email:'gurgaon@unimoni.in',website:'https://www.unimoni.in',services:'Currency Exchange,Gulf Remittance,UAE Corridor,Instant Transfer',hours:'Mon–Sat 9:00–18:30',minAmount:300,maxAmount:200000,speed:'Same day',isFeatured:false,rating:4.4,reviewCount:687,spread:0.26,tags:['Verified','Gurgaon','UAE/Gulf']},
+  {id:11,slug:'remitly',businessName:'Remitly',ini:'RL',logoClass:'c-logo-purple',type:'online',typeLabel:'Remittance App',location:'Online · US Corridor',area:'online',phone:null,email:'support@remitly.com',website:'https://www.remitly.com',services:'International Wire Transfer,Bank Deposit,Cash Pickup',hours:'24/7 Online',minAmount:100,maxAmount:1000000,speed:'Minutes–1 business day',isFeatured:false,rating:4.7,reviewCount:12400,spread:0.11,tags:['Verified','US Corridor','Fast Transfer']},
+  {id:12,slug:'niyo-global',businessName:'Niyo Global',ini:'NG',logoClass:'c-logo-purple',type:'online',typeLabel:'Fintech Card',location:'Online · Zero Markup',area:'online',phone:'+91-80-6939-4900',email:'support@niyo.co',website:'https://www.niyo.co',services:'Forex Debit Card,Zero Markup,Global Acceptance',hours:'24/7 App',minAmount:100,maxAmount:200000,speed:'Instant (card)',isFeatured:false,rating:4.6,reviewCount:8900,spread:0.00,tags:['Verified','Zero Markup','Card Only']},
+  {id:13,slug:'orient-exchange',businessName:'Orient Exchange',ini:'OE',logoClass:'c-logo-green',type:'dealer',typeLabel:'FFMC Dealer',location:'South Extension, Delhi',area:'other',phone:'+91-11-4653-7777',email:'delhi@orientexchange.in',website:'https://www.orientexchange.in',services:'Currency Exchange,Student Support,All Major Currencies',hours:'Mon–Sat 10:00–19:00',minAmount:200,maxAmount:150000,speed:'Same day',isFeatured:false,rating:4.5,reviewCount:563,spread:0.28,tags:['Verified','South Delhi']},
+  {id:14,slug:'forex4india',businessName:'Forex4India',ini:'FX',logoClass:'c-logo-green',type:'dealer',typeLabel:'Forex Dealer',location:'Karol Bagh, Delhi',area:'other',phone:'+91-11-2875-9999',email:null,website:null,services:'Currency Exchange,No Fees,Competitive Rates',hours:'Mon–Sun 10:00–20:00',minAmount:200,maxAmount:100000,speed:'Instant',isFeatured:false,rating:4.2,reviewCount:342,spread:0.15,tags:['Walk-in','Karol Bagh']},
+  {id:15,slug:'sbi-forex-services',businessName:'SBI Forex Services',ini:'SB',logoClass:'c-logo-navy',type:'bank',typeLabel:'Government Bank',location:'Parliament Street, CP',area:'cp',phone:'1800-11-2211',email:'forex@sbi.co.in',website:'https://www.sbi.co.in/forex',services:'Demand Draft,Wire Transfer,SWIFT,Currency Exchange,Forex Card',hours:'Mon–Fri 9:30–15:30',minAmount:5000,maxAmount:1000000,speed:'1–5 business days',isFeatured:false,rating:3.9,reviewCount:21000,spread:0.81,tags:['Verified','Govt Bank','DD & Wire']},
+];
+
+// Static rates fallback (INR per 1 unit of foreign currency)
+const STATIC_RATES = { USD:83.59, EUR:90.21, GBP:105.34, AED:22.75, SGD:62.18, CAD:61.42, AUD:53.87 };
+
+/* ══════════════════════════════
+   STATE
+══════════════════════════════ */
+let gFilter   = 'all';
+let gSort     = 'rate';
+let gCurrency = 'USD';
+let liveRates = { ...STATIC_RATES };
+let liveRateTs  = 0;
+let isLiveRate  = false;
+let providers   = [...STATIC_PROVIDERS];  // initially static, replaced by API if available
+let useBackend  = false;  // flip to true when API responds
+
+/* ══════════════════════════════
+   UTILITY
+══════════════════════════════ */
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const getIni = n => (n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+
+/* ══════════════════════════════
+   LEAD TRACKING
+══════════════════════════════ */
+const ls  = k => { try { return JSON.parse(localStorage.getItem(k)||'[]'); } catch { return []; } };
+const lss = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+const getLeads  = () => ls('cb_leads');
+const saveLeads = v => lss('cb_leads', v);
+
+async function trackLead(providerId, providerName, actionType) {
+  // local cache
+  const leads = getLeads();
+  leads.push({ providerId, providerName, actionType, ts: new Date().toISOString() });
+  if (leads.length > 500) leads.splice(0, leads.length - 500);
+  saveLeads(leads);
+  showLeadFlash(actionType, providerName);
+
+  // fire to backend (non-blocking)
+  if (useBackend) {
+    try {
+      await fetch(`${API_BASE}/api/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ providerId, actionType }),
+      });
+    } catch {}
+  }
+}
+
+let flashTimer = null;
+function showLeadFlash(type, name) {
+  const el = document.getElementById('leadFlash');
+  const icons  = { call:'📞', email:'✉️', whatsapp:'💬', view:'👁' };
+  const labels = { call:'Call lead tracked', email:'Email lead tracked', whatsapp:'WhatsApp lead tracked', view:'Provider viewed' };
+  el.textContent = `${icons[type]||'→'} ${labels[type]||'Lead tracked'} · ${name}`;
+  el.classList.add('show');
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+/* ══════════════════════════════
+   LIVE RATES
+══════════════════════════════ */
+async function fetchRates() {
+  // try backend first, then direct API
+  try {
+    if (API_BASE) {
+      const r = await fetch(`${API_BASE}/api/rates`, { signal: AbortSignal.timeout(4000) });
+      if (r.ok) {
+        const d = await r.json();
+        liveRates = d.rates;
+        liveRateTs = Date.now();
+        isLiveRate = d.isLive;
+        useBackend = true;
+        updateLiveBanner();
+        buildTicker();
+        return;
+      }
+    }
+  } catch {}
+
+  // direct fallback to open.er-api.com
+  try {
+    const r = await fetch('https://open.er-api.com/v6/latest/INR', { signal: AbortSignal.timeout(5000) });
+    if (r.ok) {
+      const d = await r.json();
+      const rates = d.rates;
+      liveRates = {
+        USD: +(1 / rates.USD * rates.INR).toFixed(4),
+        EUR: +(1 / rates.EUR * rates.INR).toFixed(4),
+        GBP: +(1 / rates.GBP * rates.INR).toFixed(4),
+        AED: +(1 / rates.AED * rates.INR).toFixed(4),
+        SGD: +(1 / rates.SGD * rates.INR).toFixed(4),
+        CAD: +(1 / rates.CAD * rates.INR).toFixed(4),
+        AUD: +(1 / rates.AUD * rates.INR).toFixed(4),
+      };
+      liveRateTs = Date.now();
+      isLiveRate = true;
+    }
+  } catch {}
+
+  updateLiveBanner();
+  buildTicker();
+}
+
+function updateLiveBanner() {
+  const rate = liveRates[gCurrency] || STATIC_RATES[gCurrency];
+  document.getElementById('liveRateDisplay').textContent = `1 ${gCurrency} = ₹${rate.toFixed(2)}`;
+  if (liveRateTs) {
+    const mins = Math.round((Date.now() - liveRateTs) / 60000);
+    document.getElementById('liveRateTime').textContent = mins < 1 ? 'Updated just now' : `Updated ${mins}m ago`;
+  }
+}
+
+function computeRate(provider) {
+  const base = liveRates[gCurrency] || STATIC_RATES[gCurrency];
+  const spread = provider.spread ?? 0.25;
+  return +(base * (1 + spread / 100)).toFixed(4);
+}
+
+async function onCurrencyChange() {
+  gCurrency = document.getElementById('curSel').value;
+  updateLiveBanner();
+  // try to reload providers from API with new currency
+  await loadProviders();
+  applyFS();
+}
+
+/* ══════════════════════════════
+   LOAD PROVIDERS FROM API
+══════════════════════════════ */
+async function loadProviders() {
+  if (!API_BASE) return;
+  try {
+    const url = `${API_BASE}/api/providers?currency=${gCurrency}`;
+    const r = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) return;
+    const d = await r.json();
+    if (d.providers && d.providers.length) {
+      // merge in logo class from static by slug
+      providers = d.providers.map(p => {
+        const st = STATIC_PROVIDERS.find(s => s.slug === p.slug);
+        return {
+          ...p,
+          ini: p.ini || getIni(p.businessName),
+          logoClass: st?.logoClass || 'c-logo-green',
+          tags: st?.tags || ['Verified'],
+        };
+      });
+      if (d.liveRate) { liveRates[gCurrency] = d.liveRate; isLiveRate = d.isLiveRate; }
+      useBackend = true;
+    }
+  } catch {}
+}
+
+/* ══════════════════════════════
+   TICKER
+══════════════════════════════ */
+function buildTicker() {
+  const pairs = [
+    { p:'USD/INR', cur:'USD' }, { p:'EUR/INR', cur:'EUR' },
+    { p:'GBP/INR', cur:'GBP' }, { p:'AED/INR', cur:'AED' },
+    { p:'SGD/INR', cur:'SGD' }, { p:'CAD/INR', cur:'CAD' },
+    { p:'AUD/INR', cur:'AUD' },
+  ];
+  const items = [...pairs, ...pairs].map(x => {
+    const r = liveRates[x.cur] || STATIC_RATES[x.cur];
+    const prev = STATIC_RATES[x.cur];
+    const up = r >= prev;
+    const d = (r - prev).toFixed(2);
+    const pct = ((r - prev) / prev * 100).toFixed(2);
+    return `<div class="tick-item">
+      <div style="width:4px;height:4px;border-radius:50%;background:var(--gold2);flex-shrink:0"></div>
+      <span class="tick-pair">${x.p}</span>
+      <span class="tick-val">₹${r.toFixed(r > 10 ? 2 : 4)}</span>
+      <span class="tick-ch ${up ? 'tick-up' : 'tick-dn'}">${up ? '+' : ''}${d} (${up ? '+' : ''}${pct}%)</span>
+    </div>`;
+  }).join('');
+  document.getElementById('tickerTrack').innerHTML = items;
+}
+
+/* ══════════════════════════════
+   RENDER CARDS
+══════════════════════════════ */
+function renderCards(data) {
+  const g = document.getElementById('dealerGrid');
+  document.getElementById('fCount').textContent = data.length + ' results';
+  document.getElementById('heroCount').textContent = providers.length;
+
+  if (!data.length) {
+    g.innerHTML = '<div class="no-results"><p style="font-size:14px">No providers match. Try clearing filters.</p></div>';
+    return;
+  }
+
+  window._dm = {};
+  g.innerHTML = data.map((d, i) => {
+    window._dm[i] = d;
+    const finalRate = d.finalRate ?? computeRate(d);
+    const spread = d.spread ?? 0.25;
+    const sc = spread < 0.15 ? 'sp-good' : spread < 0.40 ? 'sp-mid' : 'sp-hi';
+    const tags = d.tags || ['Verified'];
+    const tHTML = tags.map(t => `<span class="ctag${t === 'Verified' ? ' ctag-v' : t === 'Live' ? ' ctag-l' : ''}">${esc(t)}</span>`).join('');
+    const stars = '★'.repeat(Math.floor(d.rating));
+    const revTxt = d.reviewCount ? Number(d.reviewCount).toLocaleString('en-IN') + ' reviews' : 'New listing';
+    const callHref = d.phone ? `tel:${d.phone}` : '#';
+
+    return `<div class="dcard${d.isFeatured ? ' featured' : ''}" style="animation-delay:${i * .04}s"
+      onclick="openDetailByIdx(${i})" role="button" tabindex="0"
+      onkeydown="if(event.key==='Enter')openDetailByIdx(${i})">
+      ${d.isFeatured ? '<div class="ribbon ribbon-feat">Sponsored</div>' : ''}
+      <div class="c-top">
+        <div class="c-logo ${esc(d.logoClass || 'c-logo-green')}">${esc(d.ini || getIni(d.businessName))}</div>
+        <div class="c-meta">
+          <div class="c-name">${esc(d.businessName)}</div>
+          <div class="c-type">${esc(d.typeLabel || 'Forex Provider')}</div>
+          <div class="c-city">${esc(d.location)}</div>
+        </div>
+      </div>
+      <div class="c-tags">${tHTML}</div>
+      <div class="c-rate">
+        <div>
+          <div class="c-rate-pair">INR → ${esc(gCurrency)}</div>
+          <div class="c-rate-val">₹${finalRate.toFixed(2)}</div>
+          <div class="c-rate-live">${isLiveRate ? '● Live rate' : '○ Indicative'}</div>
+        </div>
+        <span class="c-spread ${sc}">+${spread.toFixed(2)}% spread</span>
+      </div>
+      <div class="c-bottom">
+        <div class="c-rating">
+          <span class="c-stars">${stars}</span>
+          <span class="c-rct">${revTxt}</span>
+        </div>
+        ${d.phone
+          ? `<a href="${callHref}" class="c-call-btn"
+               onclick="event.stopPropagation();trackLead(${d.id},'${esc(d.businessName)}','call')">
+               <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+               Call Now
+             </a>`
+          : `<span class="c-view-lnk">View Details</span>`
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openDetailByIdx(i) {
+  const d = window._dm[i];
+  if (d) { trackLead(d.id, d.businessName, 'view'); openDetail(d); }
+}
+
+/* ══════════════════════════════
+   FILTER / SORT
+══════════════════════════════ */
+function setFilter(t, b) {
+  gFilter = t;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  b.classList.add('on');
+  applyFS();
+}
+function setSort(t, b) {
+  gSort = t;
+  document.querySelectorAll('.s-pill').forEach(p => p.classList.remove('on'));
+  b.classList.add('on');
+  applyFS();
+}
+function applyFS() {
+  const q = (document.getElementById('searchInp').value || '').toLowerCase().trim();
+  const area = document.getElementById('areaSel').value;
+  let d = [...providers];
+
+  if (gFilter === 'dealer') d = d.filter(x => x.type === 'dealer');
+  else if (gFilter === 'bank')  d = d.filter(x => x.type === 'bank');
+  else if (gFilter === 'online')d = d.filter(x => x.type === 'online');
+  else if (gFilter === 'cp')    d = d.filter(x => x.area === 'cp');
+  else if (gFilter === 'gurgaon')d= d.filter(x => x.area === 'gurgaon');
+  else if (gFilter === 'noida') d = d.filter(x => x.area === 'noida');
+
+  if (area) d = d.filter(x => x.area === area);
+  if (q) d = d.filter(x => (x.businessName + x.location + (x.typeLabel||'') + (x.services||'')).toLowerCase().includes(q));
+
+  // compute final rates for sorting
+  d = d.map(x => ({ ...x, _finalRate: x.finalRate ?? computeRate(x) }));
+
+  if (gSort === 'rate')   d.sort((a, b) => b._finalRate - a._finalRate);
+  else if (gSort === 'trust')  d.sort((a, b) => b.rating - a.rating);
+  else if (gSort === 'spread') d.sort((a, b) => (a.spread ?? 0) - (b.spread ?? 0));
+
+  renderCards([...d.filter(x => x.isFeatured), ...d.filter(x => !x.isFeatured)]);
+}
+
+/* ══════════════════════════════
+   DETAIL PANEL
+══════════════════════════════ */
+function openDetail(d) {
+  renderDetail(d);
+  const p = document.getElementById('det-panel');
+  p.classList.add('open'); p.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+function closeDetail() {
+  document.getElementById('det-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderDetail(d) {
+  const phone = d.phone || '';
+  const email = d.email || '';
+  const loc   = d.location || 'Delhi NCR';
+  const name  = d.businessName || '';
+  const ini   = (d.ini || getIni(name)).toUpperCase();
+  const svcList = (d.services || '').split(',').map(s => s.trim()).filter(Boolean);
+  const finalRate = d.finalRate ?? computeRate(d);
+  const avCls = d.logoClass === 'c-logo-navy' ? 'det-av-n' : d.logoClass === 'c-logo-purple' ? 'det-av-p' : 'det-av-g';
+  const waNum = phone.replace(/\D/g, '');
+  const waMsg = encodeURIComponent('Hi, I found your listing on Currency Buddy and would like to enquire about your forex services.');
+
+  const left = `
+    <div class="det-header">
+      <div class="det-av ${avCls}">${esc(ini)}</div>
+      <div>
+        <h1 class="det-title">${esc(name)}</h1>
+        <div class="det-subtitle">${esc(d.typeLabel || 'Forex Provider')}</div>
+        <div class="det-location">📍 ${esc(loc)}</div>
+      </div>
+    </div>
+    <div class="det-card">
+      <div class="det-ct">About</div>
+      <div class="det-row"><span class="det-rl">Business</span><span class="det-rv">${esc(name)}</span></div>
+      <div class="det-row"><span class="det-rl">Location</span><span class="det-rv">${esc(loc)}</span></div>
+      ${d.hours     ? `<div class="det-row"><span class="det-rl">Hours</span><span class="det-rv">${esc(d.hours)}</span></div>` : ''}
+      ${d.minAmount ? `<div class="det-row"><span class="det-rl">Amount range</span><span class="det-rv">₹${Number(d.minAmount).toLocaleString('en-IN')} – ₹${Number(d.maxAmount).toLocaleString('en-IN')}</span></div>` : ''}
+      ${d.speed     ? `<div class="det-row"><span class="det-rl">Processing</span><span class="det-rv">${esc(d.speed)}</span></div>` : ''}
+      ${d.reviewCount ? `<div class="det-row"><span class="det-rl">Reviews</span><span class="det-rv">★ ${d.rating} · ${Number(d.reviewCount).toLocaleString('en-IN')} reviews</span></div>` : ''}
+    </div>
+    ${svcList.length ? `
+    <div class="det-card">
+      <div class="det-ct">Services Offered</div>
+      <div class="svc-chips">${svcList.map(s => `<span class="svc-chip">${esc(s)}</span>`).join('')}</div>
+    </div>` : ''}
+    <div class="det-card">
+      <div class="det-ct">Indicative Rate — INR → ${esc(gCurrency)}</div>
+      <div class="det-rate-box">
+        <div>
+          <div class="det-rate-lbl">${isLiveRate ? '● Live mid-market reference' : '○ Indicative reference'}</div>
+          <div class="det-rate-lbl" style="margin-top:3px">Spread: +${(d.spread??0.25).toFixed(2)}%</div>
+        </div>
+        <div class="det-rate-num">₹${finalRate.toFixed(2)}</div>
+      </div>
+      <p style="font-size:10.5px;color:#94a3b8;margin-top:9px;font-family:var(--mono);line-height:1.5">Indicative only. Actual rate set by the provider. Confirm before transacting.</p>
+    </div>
+    <div class="det-disc"><strong>Directory listing only.</strong> Currency Buddy is not involved in any transaction between you and this provider. Contact them directly for rates, availability, and terms.</div>`;
+
+  const right = `
+    <div>
+      <div class="contact-card">
+        <div class="cc-head">
+          <div class="cc-icon">📞</div>
+          <div class="cc-title">Contact Provider</div>
+          <div class="cc-sub">Reach out directly — no middlemen, no fees</div>
+        </div>
+        ${phone
+          ? `<a href="tel:${esc(phone)}" class="cc-call" onclick="trackLead(${d.id},'${esc(name)}','call')">
+               <span class="cc-call-icon">📞</span>
+               <span>Call Now — ${esc(phone)}</span>
+             </a>`
+          : '<div class="cc-no-contact">Phone not listed</div>'
+        }
+        ${email
+          ? `<button class="cc-email" onclick="trackLead(${d.id},'${esc(name)}','email');window.location.href='mailto:${esc(email)}'">
+               ✉️ Email Provider
+             </button>`
+          : ''
+        }
+        ${phone
+          ? `<a href="https://wa.me/${waNum}?text=${waMsg}" target="_blank" rel="noopener noreferrer" class="cc-wa"
+               onclick="trackLead(${d.id},'${esc(name)}','whatsapp')">
+               💬 WhatsApp
+             </a>`
+          : ''
+        }
+        <div class="cc-details">
+          ${phone ? `<div class="cc-drow"><span class="cc-drow-ic">📞</span><div><div class="cc-drow-lbl">Phone</div><a href="tel:${esc(phone)}" class="cc-drow-val">${esc(phone)}</a></div></div>` : ''}
+          ${email ? `<div class="cc-drow"><span class="cc-drow-ic">✉️</span><div><div class="cc-drow-lbl">Email</div><a href="mailto:${esc(email)}" class="cc-drow-val">${esc(email)}</a></div></div>` : ''}
+          <div class="cc-drow"><span class="cc-drow-ic">📍</span><div><div class="cc-drow-lbl">Location</div><div class="cc-drow-val">${esc(loc)}</div></div></div>
+          ${d.website ? `<div class="cc-drow"><span class="cc-drow-ic">🌐</span><div><div class="cc-drow-lbl">Website</div><a href="${esc(d.website)}" target="_blank" rel="noopener noreferrer" class="cc-drow-val">${esc(d.website.replace(/^https?:\/\//, ''))}</a></div></div>` : ''}
+        </div>
+        <div class="cc-trust">🔒 Currency Buddy is a directory only. We are not a party to any transaction between you and this provider.</div>
+      </div>
+      <button class="cc-back-btn" onclick="closeDetail()">← Back to All Providers</button>
+    </div>`;
+
+  document.getElementById('detBody').innerHTML = `<div class="det-layout"><div>${left}</div>${right}</div>`;
+}
+
+/* ══════════════════════════════
+   LYB MODAL
+══════════════════════════════ */
+function openLYB() { document.getElementById('lybOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeLYB() {
+  document.getElementById('lybOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(() => {
+    document.getElementById('lybForm').style.display = '';
+    document.getElementById('lybOk').classList.remove('show');
+    ['lyb-biz','lyb-owner','lyb-phone','lyb-email','lyb-loc','lyb-msg'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = '';
+    });
+    document.getElementById('lybErr').style.display = 'none';
+    document.querySelectorAll('#lybSvcs button').forEach(b => b.classList.remove('sel'));
+    const btn = document.getElementById('lybBtn'); btn.disabled = false; btn.textContent = 'Submit Listing Request →';
+  }, 300);
+}
+function closeLYBOvr(e) { if (e.target === document.getElementById('lybOverlay')) closeLYB(); }
+
+async function submitLYB() {
+  const biz   = document.getElementById('lyb-biz').value.trim();
+  const owner = document.getElementById('lyb-owner').value.trim();
+  const phone = document.getElementById('lyb-phone').value.trim();
+  const email = document.getElementById('lyb-email').value.trim();
+  const loc   = document.getElementById('lyb-loc').value.trim();
+  const err   = document.getElementById('lybErr');
+
+  if (!biz || !owner || !phone || !email || !loc) {
+    err.style.display = 'block'; err.textContent = 'Please fill in all required fields.'; return;
+  }
+
+  const btn = document.getElementById('lybBtn'); btn.disabled = true; btn.textContent = 'Submitting…'; err.style.display = 'none';
+  const svcs = [...document.querySelectorAll('#lybSvcs button.sel')].map(b => b.textContent.trim()).join(', ');
+  const payload = { businessName: biz, ownerName: owner, phone, email, location: loc, services: svcs, message: document.getElementById('lyb-msg').value.trim() };
+
+  let ok = false;
+
+  // try backend first
+  if (API_BASE) {
+    try {
+      const r = await fetch(`${API_BASE}/api/onboard`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+      });
+      if (r.ok) ok = true;
+    } catch {}
+  }
+
+  // fallback to Google Sheets webhook
+  if (!ok) {
+    try {
+      await fetch(WEBHOOK, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify({ ...payload, submittedAt: new Date().toISOString(), source: 'CurrencyBuddy Delhi NCR' }) });
+      ok = true;
+    } catch {}
+  }
+
+  if (ok) {
+    document.getElementById('lybForm').style.display = 'none';
+    document.getElementById('lybOk').classList.add('show');
+  } else {
+    btn.disabled = false; btn.textContent = 'Submit Listing Request →';
+    err.style.display = 'block';
+    err.innerHTML = 'Something went wrong. Email <a href="mailto:hello@currencybuddy.in" style="color:#b91c1c">hello@currencybuddy.in</a>';
+  }
+}
+
+/* ══════════════════════════════
+   ADMIN PANEL
+══════════════════════════════ */
+let logoTaps = 0, logoT = null;
+document.getElementById('logoTrigger').addEventListener('click', () => {
+  logoTaps++; clearTimeout(logoT);
+  logoT = setTimeout(() => logoTaps = 0, 2000);
+  if (logoTaps >= 5) { logoTaps = 0; openAdmin(); }
+});
+
+let admToken = null;
+function openAdmin() {
+  document.getElementById('admin-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const stored = sessionStorage.getItem('cb_auth');
+  if (stored) { admToken = stored; showAdmDash(); }
+}
+function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); document.body.style.overflow = ''; }
+
+async function adminLogin() {
+  const email = document.getElementById('admEmail').value.trim();
+  const pass  = document.getElementById('admPass').value;
+  const errEl = document.getElementById('admErr');
+
+  // Try real API first
+  if (API_BASE) {
+    try {
+      const r = await fetch(`${API_BASE}/api/admin/login`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password: pass }),
+      });
+      if (r.ok) {
+        const d = await r.json();
+        admToken = d.token;
+        sessionStorage.setItem('cb_auth', admToken);
+        errEl.style.display = 'none';
+        showAdmDash();
+        return;
+      }
+    } catch {}
+  }
+
+  // Fallback hardcoded MVP check
+  if (email === ADM_EMAIL && pass === ADM_PASS) {
+    admToken = ADM_TOKEN;
+    sessionStorage.setItem('cb_auth', admToken);
+    errEl.style.display = 'none';
+    showAdmDash();
+  } else {
+    errEl.style.display = 'block';
+    document.getElementById('admPass').value = '';
+  }
+}
+document.getElementById('admPass').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin(); });
+
+function adminLogout() {
+  admToken = null; sessionStorage.removeItem('cb_auth');
+  document.getElementById('admLoginWrap').style.display = 'flex';
+  document.getElementById('admDash').style.display = 'none';
+  document.getElementById('admEmail').value = '';
+  document.getElementById('admPass').value = '';
+}
+
+async function showAdmDash() {
+  document.getElementById('admLoginWrap').style.display = 'none';
+  document.getElementById('admDash').style.display = 'block';
+  await fetchFromAPI();
+}
+
+async function fetchFromAPI() {
+  const btn = document.getElementById('fetchBtn');
+  btn.textContent = 'Loading…'; btn.disabled = true;
+
+  if (API_BASE && admToken) {
+    try {
+      const headers = { Authorization: `Bearer ${admToken}` };
+      const [provRes, leadRes] = await Promise.all([
+        fetch(`${API_BASE}/api/admin/providers`, { headers }),
+        fetch(`${API_BASE}/api/admin/leads`, { headers }),
+      ]);
+      if (provRes.ok) {
+        const pd = await provRes.json();
+        const pending  = pd.providers.filter(p => p.status === 'pending');
+        const active   = pd.providers.filter(p => p.status === 'active');
+        const rejected = pd.providers.filter(p => p.status === 'rejected');
+        updateAdmStats(pending.length, active.length, rejected.length, 0);
+        renderAdmProvidersFromAPI(pd.providers);
+      }
+      if (leadRes.ok) {
+        const ld = await leadRes.json();
+        const total = ld.leads.reduce((s, l) => s + Number(l.total), 0);
+        document.getElementById('sTotalLeads').textContent = total;
+        document.getElementById('tLeads').textContent = ld.leads.length;
+        window._admLeads = ld.leads;
+      }
+    } catch { admAlert('API not connected — using local data', 'err'); }
+  }
+
+  // Also load local lead data
+  refreshLocalStats();
+  btn.textContent = '↓ Refresh Providers'; btn.disabled = false;
+}
+
+function updateAdmStats(pen, app, rej, leads) {
+  document.getElementById('sPen').textContent = pen;
+  document.getElementById('sApp').textContent = app;
+  document.getElementById('sRej').textContent = rej;
+  document.getElementById('tPen').textContent = pen;
+  document.getElementById('tApp').textContent = app;
+  document.getElementById('tRej').textContent = rej;
+}
+
+function refreshLocalStats() {
+  const leads = getLeads();
+  document.getElementById('sTotalLeads').textContent = leads.length;
+  document.getElementById('tLeads').textContent = leads.length;
+}
+
+// Local-storage based admin (MVP fallback without backend)
+const getLsPending  = () => ls('cb_pending');
+const getLsApproved = () => ls('cb_approved');
+const getLsRejected = () => ls('cb_rejected');
+const saveLsPending  = v => lss('cb_pending', v);
+const saveLsApproved = v => lss('cb_approved', v);
+const saveLsRejected = v => lss('cb_rejected', v);
+
+let curTab = 'pending';
+function switchTab(t, btn) {
+  curTab = t;
+  document.querySelectorAll('.adm-tab').forEach(x => x.classList.remove('on'));
+  btn.classList.add('on');
+  renderAdmTab(t);
+}
+
+function renderAdmProvidersFromAPI(allProviders) {
+  window._admAllProviders = allProviders;
+  renderAdmTab(curTab);
+}
+
+function renderAdmTab(tab) {
+  const list = document.getElementById('admList');
+  if (tab === 'leads') { renderLeadsTab(list); return; }
+
+  let data;
+  if (window._admAllProviders) {
+    data = window._admAllProviders.filter(p => p.status === tab || (tab === 'active' && p.status === 'active'));
+    if (tab === 'active') data = window._admAllProviders.filter(p => p.status === 'active');
+    if (tab === 'pending') data = window._admAllProviders.filter(p => p.status === 'pending');
+    if (tab === 'rejected') data = window._admAllProviders.filter(p => p.status === 'rejected');
+  } else {
+    // fallback to localStorage
+    if (tab === 'pending')  data = getLsPending();
+    if (tab === 'active')   data = getLsApproved();
+    if (tab === 'rejected') data = getLsRejected();
+  }
+
+  if (!data || !data.length) {
+    list.innerHTML = `<div class="adm-empty"><div class="adm-empty-ic">${tab==='pending'?'📋':tab==='active'?'✅':'🚫'}</div><div>${tab==='pending'?'No pending submissions yet.':tab==='active'?'No live providers.':'No rejected providers.'}</div></div>`;
+    return;
+  }
+
+  const note = tab === 'pending'
+    ? '<div class="adm-note">📋 Review each submission. Approve to make live.</div>'
+    : tab === 'active'
+    ? '<div class="adm-note">✅ These providers are currently live on the directory.</div>'
+    : '';
+
+  list.innerHTML = note + data.map(p => {
+    const bname = p.business_name || p.businessName || '';
+    const ini = esc(getIni(bname));
+    const ep = esc(p.phone || '');
+    const pc = tab==='pending' ? 'pill-pend' : tab==='active' ? 'pill-live' : 'pill-rej';
+    const pl = tab==='pending' ? 'Pending' : tab==='active' ? 'Live' : 'Rejected';
+    const pid = p.id || '';
+    return `<div class="adm-card">
+      <div class="adm-av">${ini}</div>
+      <div class="adm-cb">
+        <div class="adm-cn">${esc(bname)}</div>
+        <div class="adm-cm">
+          <span>👤 ${esc(p.owner_name || p.ownerName || '—')}</span>
+          <span>📞 <a href="tel:${ep}" style="color:inherit;text-decoration:none">${ep||'—'}</a></span>
+          <span>📧 ${esc(p.email||'—')}</span>
+          <span>📍 ${esc(p.location||'—')}</span>
+        </div>
+        ${p.services ? `<div class="adm-cs">🔧 ${esc(p.services)}</div>` : ''}
+        ${p.created_at ? `<div class="adm-ct">Submitted: ${new Date(p.created_at).toLocaleString('en-IN')}</div>` : ''}
+        ${p.total_leads ? `<div class="adm-cs">📊 ${p.total_leads} total leads</div>` : ''}
+      </div>
+      <div class="adm-ca">
+        <span class="adm-pill ${pc}">${pl}</span>
+        ${tab==='pending' && pid
+          ? `<button class="adm-approve" onclick="updateProviderStatus(${pid},'active',this)">✓ Approve</button>
+             <button class="adm-reject"  onclick="updateProviderStatus(${pid},'rejected',this)">✕ Reject</button>`
+          : ''}
+        ${tab==='active' && pid
+          ? `<button class="adm-reject" onclick="updateProviderStatus(${pid},'rejected',this)">Remove</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function updateProviderStatus(id, status, btn) {
+  if (!API_BASE || !admToken) { admAlert('Backend not connected.', 'err'); return; }
+  btn.disabled = true; btn.textContent = '…';
+  try {
+    const r = await fetch(`${API_BASE}/api/admin/providers/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${admToken}` },
+      body: JSON.stringify({ status }),
+    });
+    if (r.ok) {
+      admAlert(`Provider ${status === 'active' ? 'approved and live!' : 'rejected.'}`, status === 'active' ? 'ok' : 'err');
+      await fetchFromAPI();
+      if (status === 'active') { await loadProviders(); applyFS(); }
+    }
+  } catch { admAlert('Error updating status.', 'err'); btn.disabled = false; btn.textContent = status === 'active' ? '✓ Approve' : '✕ Reject'; }
+}
+
+function renderLeadsTab(list) {
+  // prefer API data
+  if (window._admLeads && window._admLeads.length) {
+    list.innerHTML = `<div class="adm-note">📊 Lead tracker — from backend database.</div>
+      <div class="det-card" style="background:#fff;border:1px solid #dde4dd;border-radius:12px;padding:20px">
+      ${window._admLeads.map(l => `<div class="adm-lead-row">
+        <span class="adm-lead-name">${esc(l.business_name)}</span>
+        <div class="adm-lead-counts">
+          ${l.calls  > 0 ? `<span class="adm-lc adm-lc-call">📞 ${l.calls}</span>` : ''}
+          ${l.emails > 0 ? `<span class="adm-lc adm-lc-email">✉️ ${l.emails}</span>` : ''}
+          ${l.whatsapp>0 ? `<span class="adm-lc" style="background:#d1fae5;color:#065f46">💬 ${l.whatsapp}</span>` : ''}
+          ${l.views  > 0 ? `<span class="adm-lc adm-lc-view">👁 ${l.views}</span>` : ''}
+        </div>
+      </div>`).join('')}
+      </div>`;
+    return;
+  }
+
+  // fallback: local
+  const leads = getLeads();
+  if (!leads.length) { list.innerHTML = '<div class="adm-empty"><div class="adm-empty-ic">📊</div><div>No leads yet.</div></div>'; return; }
+  const agg = {};
+  leads.forEach(l => {
+    if (!agg[l.providerName]) agg[l.providerName] = { call:0, email:0, whatsapp:0, view:0 };
+    agg[l.providerName][l.actionType] = (agg[l.providerName][l.actionType] || 0) + 1;
+  });
+  const rows = Object.entries(agg).sort((a, b) => (b[1].call + b[1].email + b[1].whatsapp) - (a[1].call + a[1].email + a[1].whatsapp));
+  list.innerHTML = `<div class="adm-note">📊 Lead tracker (local session).</div>
+    <div class="det-card" style="background:#fff;border:1px solid #dde4dd;border-radius:12px;padding:20px">
+    ${rows.map(([name, c]) => `<div class="adm-lead-row">
+      <span class="adm-lead-name">${esc(name)}</span>
+      <div class="adm-lead-counts">
+        ${c.call    ? `<span class="adm-lc adm-lc-call">📞 ${c.call}</span>` : ''}
+        ${c.email   ? `<span class="adm-lc adm-lc-email">✉️ ${c.email}</span>` : ''}
+        ${c.whatsapp? `<span class="adm-lc" style="background:#d1fae5;color:#065f46">💬 ${c.whatsapp}</span>` : ''}
+        ${c.view    ? `<span class="adm-lc adm-lc-view">👁 ${c.view}</span>` : ''}
+      </div>
+    </div>`).join('')}
+    </div>`;
+}
+
+function admAlert(msg, type) {
+  const el = document.getElementById('admAlertBox');
+  el.textContent = msg; el.className = 'adm-alert-box show ' + type;
+  setTimeout(() => el.classList.remove('show'), 7000);
+}
+
+/* ══════════════════════════════
+   COMPLIANCE FOOTER
+══════════════════════════════ */
+function toggleComp() { document.getElementById('comp-footer').classList.toggle('col'); }
+setTimeout(() => {
+  const c = document.getElementById('comp-footer');
+  c.classList.remove('col');
+  setTimeout(() => c.classList.add('col'), 5000);
+}, 3200);
+
+/* ══════════════════════════════
+   OPENING ANIMATION
+══════════════════════════════ */
+(()=>{
+  const a = document.getElementById('opening');
+  setTimeout(() => { a.classList.add('away'); setTimeout(() => a.remove(), 900); }, 2400);
+  a.addEventListener('click', () => { a.classList.add('away'); setTimeout(() => a.remove(), 600); });
+})();
+
+/* ══════════════════════════════
+   KEYBOARD
+══════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeLYB(); closeAdmin(); closeDetail(); }
+});
+
+/* ══════════════════════════════
+   INIT
+══════════════════════════════ */
+(async () => {
+  await fetchRates();
+  await loadProviders();
+  applyFS();
+  buildTicker();
+  // refresh rates every 60s
+  setInterval(async () => { await fetchRates(); applyFS(); buildTicker(); }, 60000);
+  // update live banner every 30s
+  setInterval(updateLiveBanner, 30000);
+})();
+</script>
+</body>
+</html>
