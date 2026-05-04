@@ -803,6 +803,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
 ══════════════════════════════ */
 const API_BASE  = window.API_BASE || '';   // empty = same origin
 const WEBHOOK   = 'https://script.google.com/macros/s/AKfycbzt31oJ4lwAR6YlTxFCtkDoUd1ffUtRBuufx-l-J5sC1_IHVBaSG6K_tlR32QjOR1Tk/exec';
+// https://docs.google.com/spreadsheets/d/1f1bJRS5lp6DX6gq1ogOaFvhA49eNpkyDzI1HJj5IJdk/edit?gid=0#gid=0//
 const ADM_EMAIL = 'admin@currencybuddy.in';
 const ADM_PASS  = 'CurrencyBuddy@2025';
 const ADM_TOKEN = 'cb-admin-2025';
@@ -1299,7 +1300,8 @@ document.getElementById('logoTrigger').addEventListener('click', () => {
   if (logoTaps >= 5) { logoTaps = 0; openAdmin(); }
 });
 
-let admToken = null;
+token = "https://docs.google.com/spreadsheets/d/1f1bJRS5lp6DX6gq1ogOaFvhA49eNpkyDzI1HJj5IJdk/edit?gid=0#gid=0"
+let admToken = token;
 function openAdmin() {
   document.getElementById('admin-panel').classList.add('open');
   document.body.style.overflow = 'hidden';
