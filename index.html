@@ -625,7 +625,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <div class="lyb-head">
       <button class="lyb-close" onclick="closeLYB()">✕</button>
       <h2>List Your Business</h2>
-      <p>Join verified forex dealers on Currency Buddy. Free listing, zero commission.</p>
+      <p>Join verified forex dealers on Currency Buddy. Zero commission.</p>
     </div>
     <div class="gold-bar"></div>
     <div class="lyb-success" id="lybOk">
@@ -658,7 +658,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
       <div class="f-row"><label>Message (optional)</label><textarea id="lyb-msg" placeholder="Tell us about your business..."></textarea></div>
       <div class="f-err" id="lybErr">Something went wrong. Email <a href="mailto:hello@currencybuddy.in" style="color:#b91c1c">hello@currencybuddy.in</a></div>
       <button type="button" class="lyb-submit" id="lybBtn" onclick="submitLYB()">Submit Listing Request →</button>
-      <p class="f-note">Free listing. No commission. By submitting you agree we may contact you to verify details.</p>
+      <p class="f-note"> No commission. By submitting you agree we may contact you to verify details.</p>
     </div>
   </div>
 </div>
@@ -668,7 +668,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
   <span class="nav-logo" id="logoTrigger">CurrencyBuddy<sup>Beta</sup></span>
   <div class="nav-right">
     <a href="#dealers" class="nav-link">Find Dealers</a>
-    <a href="#" class="nav-link" onclick="openLYB();return false">List Free</a>
+    <a href="#" class="nav-link" onclick="openLYB();return false">List </a>
     <button class="btn-nav-gold" onclick="openLYB()">List Your Business</button>
     <button class="btn-ghost" id="adminBtn" onclick="openAdmin()" title="Admin">⚙</button>
   </div>
@@ -685,7 +685,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
 </div>
  
 <div class="hero">
-  <div class="hero-label">Delhi NCR · Verified Forex Directory</div>
+  <div class="hero-label">Verified Forex Directory</div>
   <h1>Find <i>Trusted</i> Currency Exchange Providers Near You</h1>
   <p class="hero-sub">Get the best rates from verified forex dealers, banks, and remittance services. Contact directly — no middlemen, no hidden fees.</p>
   <div class="hero-cta-row">
@@ -774,7 +774,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
  
 <footer>
   <span class="ft-logo">CurrencyBuddy</span>
-  Delhi NCR · Mumbai · Bangalore (coming soon) · hello@currencybuddy.in
+  Delhi NCR · Mumbai · Bangalore  · hello@currencybuddy.in
   <div class="ft-disc">
     Currency Buddy is a technology platform providing directory and information services only. We do not hold funds, process transactions, provide financial advice, or act as an intermediary in any forex transaction. All rates are indicative mid-market references and are not guaranteed transaction rates. © 2025 Currency Buddy Technologies Pvt. Ltd.
   </div>
@@ -806,7 +806,8 @@ const WEBHOOK   = 'https://script.google.com/macros/s/AKfycbzt31oJ4lwAR6YlTxFCtk
 const ADM_EMAIL = 'admin@currencybuddy.in';
 const ADM_PASS  = 'CurrencyBuddy@2025';
 const ADM_TOKEN = 'cb-admin-2025';
- 
+const SHEET_ID  = '1f1bJRS5lp6DX6gq1ogOaFvhA49eNpkyDzI1HJj5IJdk';
+const SHEET_API_KEY = 'AIzaSyDg039HF3t8UXutM2lNwTPUoJHeqKbsksg';
 /* ══════════════════════════════
    STATIC FALLBACK DATA
    Used when backend is not connected
