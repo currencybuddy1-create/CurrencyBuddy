@@ -7,7 +7,7 @@
 <meta name="description" content="Find and contact verified forex dealers, banks, and remittance services near you. Direct contact — no middlemen."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-
+ 
 <style>
 /* ════════════════════════════════════
    DESIGN TOKENS
@@ -28,17 +28,17 @@
   --sh: 0 1px 3px rgba(14,26,15,.06), 0 4px 16px rgba(14,26,15,.05);
   --sh-up: 0 4px 20px rgba(14,26,15,.12), 0 12px 40px rgba(14,26,15,.10);
 }
-
+ 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body { background: var(--cream); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; padding-bottom: 80px; }
-
+ 
 /* noise texture */
 body::before {
   content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .35;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
 }
-
+ 
 /* ════════════════════════════════════
    OPENING ANIMATION
 ════════════════════════════════════ */
@@ -66,7 +66,7 @@ body::before {
 @keyframes barW   { to { width:100%; } }
 @keyframes openOut{ to { opacity:0; pointer-events:none; visibility:hidden; } }
 @keyframes cardIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
+ 
 /* ════════════════════════════════════
    NAV
 ════════════════════════════════════ */
@@ -93,7 +93,7 @@ body::before {
 .btn-ghost   { background:transparent; color:rgba(247,242,234,.3); font-size:12px; padding:5px 8px; border-radius:4px; border:1px solid rgba(247,242,234,.1); cursor:pointer; transition:all .2s; }
 .btn-ghost:hover { color:rgba(247,242,234,.7); border-color:rgba(247,242,234,.25); }
 .btn-ghost.admin-active { color:var(--gold2); border-color:var(--gold); }
-
+ 
 /* ════════════════════════════════════
    DISCLAIMER + TICKER
 ════════════════════════════════════ */
@@ -102,7 +102,7 @@ body::before {
   padding:7px 5vw; font-size:11px; color:var(--forest3);
   font-family:var(--mono); text-align:center; line-height:1.5; position:relative; z-index:1;
 }
-
+ 
 .ticker-wrap {
   background:var(--navy); border-bottom:1.5px solid rgba(201,162,39,.4);
   height:36px; display:flex; align-items:center; overflow:hidden; position:relative; z-index:1;
@@ -132,7 +132,7 @@ body::before {
 .tick-dn   { background:rgba(248,113,113,.12); color:#f87171; }
 .ticker-note { font-family:var(--mono); font-size:9px; letter-spacing:1px; color:rgba(201,162,39,.4); padding-right:14px; flex-shrink:0; }
 @keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-
+ 
 /* ════════════════════════════════════
    HERO
 ════════════════════════════════════ */
@@ -155,7 +155,7 @@ body::before {
 .h-stat { border-left:2px solid var(--saffron); padding-left:14px; }
 .h-stat-num { font-family:var(--serif); font-size:28px; font-weight:700; color:var(--forest); line-height:1; }
 .h-stat-lbl { font-size:11px; color:var(--ink3); margin-top:2px; }
-
+ 
 /* ════════════════════════════════════
    SEARCH BAR + FILTERS
 ════════════════════════════════════ */
@@ -189,7 +189,7 @@ body::before {
 }
 .s-btn { background:var(--forest); color:var(--cream); font-size:13px; font-weight:500; padding:10px 20px; border-radius:8px; border:none; cursor:pointer; transition:background .2s; white-space:nowrap; font-family:var(--sans); }
 .s-btn:hover { background:var(--forest2); }
-
+ 
 /* live rate banner */
 .live-banner {
   background:var(--navy); padding:6px 5vw; font-family:var(--mono); font-size:11px;
@@ -197,7 +197,7 @@ body::before {
 }
 .live-banner .dot { width:6px; height:6px; border-radius:50%; background:#4ade80; flex-shrink:0; animation:pulse 2s infinite; }
 .live-banner strong { color:var(--gold2); }
-
+ 
 .filters {
   background:var(--cream2); border-bottom:1px solid var(--border);
   padding:11px 5vw; position:sticky; top:62px; z-index:88;
@@ -208,7 +208,7 @@ body::before {
 .chip:hover { border-color:var(--forest3); color:var(--forest3); }
 .chip.on { background:var(--forest); color:var(--cream); border-color:var(--forest); }
 .f-count { margin-left:auto; font-size:11.5px; color:var(--ink3); font-family:var(--mono); white-space:nowrap; }
-
+ 
 /* ════════════════════════════════════
    LISTING GRID
 ════════════════════════════════════ */
@@ -218,9 +218,9 @@ body::before {
 .sort-pills { display:flex; gap:5px; flex-wrap:wrap; }
 .s-pill { padding:4px 12px; border-radius:4px; border:1px solid var(--border); background:transparent; color:var(--ink3); font-size:11px; font-family:var(--mono); cursor:pointer; transition:all .15s; }
 .s-pill.on { border-color:var(--forest2); color:var(--forest2); background:var(--sage); }
-
+ 
 .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:15px; }
-
+ 
 /* ════════════════════════════════════
    DEALER CARDS
 ════════════════════════════════════ */
@@ -235,7 +235,7 @@ body::before {
 .ribbon { position:absolute; top:0; right:0; font-family:var(--mono); font-size:8.5px; letter-spacing:1.5px; padding:4px 12px; text-transform:uppercase; }
 .ribbon-feat { background:var(--saffron); color:#fff; border-radius:0 var(--r-lg) 0 7px; }
 .ribbon-live { background:var(--gold); color:var(--navy); border-radius:0 var(--r-lg) 0 7px; font-weight:600; }
-
+ 
 .c-top { display:flex; gap:13px; align-items:flex-start; margin-bottom:13px; }
 .c-logo { width:46px; height:46px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-size:15px; font-weight:700; flex-shrink:0; }
 .c-logo-green  { background:var(--forest); color:var(--cream); }
@@ -247,12 +247,12 @@ body::before {
 .c-type  { font-size:10.5px; font-family:var(--mono); color:var(--ink3); letter-spacing:.5px; text-transform:uppercase; }
 .c-city  { font-size:11.5px; color:var(--ink3); margin-top:3px; display:flex; align-items:center; gap:4px; }
 .c-city::before { content:''; display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--forest3); flex-shrink:0; }
-
+ 
 .c-tags { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:12px; }
 .ctag   { font-size:9.5px; font-family:var(--mono); padding:2px 7px; border-radius:4px; border:1px solid var(--border); color:var(--ink3); }
 .ctag-v { border-color:#c2d8c8; color:var(--forest3); background:var(--sage); }
 .ctag-l { border-color:var(--gold); color:var(--navy); background:var(--gold-light); }
-
+ 
 .c-rate {
   display:flex; justify-content:space-between; align-items:center;
   background:var(--cream); border-radius:7px; padding:9px 12px; margin-bottom:11px;
@@ -264,7 +264,7 @@ body::before {
 .sp-good  { background:#d4edd9; color:#1a5a2a; }
 .sp-mid   { background:#fde8cc; color:#7a3d07; }
 .sp-hi    { background:#fde3e3; color:#8b1a1a; }
-
+ 
 .c-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .c-rating { display:flex; align-items:center; gap:5px; }
 .c-stars  { color:var(--saffron); font-size:11px; }
@@ -280,14 +280,14 @@ body::before {
 .dcard:hover .c-view-lnk { gap:7px; }
 .c-view-lnk::after { content:'→'; }
 .no-results { text-align:center; padding:60px 20px; grid-column:1/-1; color:var(--ink3); }
-
+ 
 /* ════════════════════════════════════
    DETAIL PANEL
 ════════════════════════════════════ */
 #det-panel { display:none; position:fixed; inset:0; z-index:6000; background:#f4f7f4; overflow-y:auto; }
 #det-panel.open { display:block; animation:slideIn .28s ease; }
 @keyframes slideIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-
+ 
 .det-nav {
   position:sticky; top:0; z-index:10; background:var(--navy); height:56px;
   display:flex; align-items:center; justify-content:space-between; padding:0 5vw;
@@ -305,7 +305,7 @@ body::before {
 .det-body { max-width:1040px; margin:0 auto; padding:28px 5vw 80px; }
 .det-layout { display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start; }
 @media(max-width:740px) { .det-layout { grid-template-columns:1fr; } }
-
+ 
 .det-header {
   background:#fff; border:1px solid #dde4dd; border-radius:var(--r-xl);
   padding:26px; margin-bottom:18px; display:flex; gap:18px; align-items:flex-start;
@@ -318,7 +318,7 @@ body::before {
 .det-title    { font-family:var(--serif); font-size:clamp(19px,3vw,26px); font-weight:700; color:var(--navy); line-height:1.15; margin-bottom:4px; }
 .det-subtitle { font-size:11px; color:var(--ink3); font-family:var(--mono); letter-spacing:.5px; text-transform:uppercase; margin-bottom:5px; }
 .det-location { font-size:13.5px; color:#64748b; display:flex; align-items:center; gap:5px; }
-
+ 
 .det-card { background:#fff; border:1px solid #dde4dd; border-radius:var(--r-lg); padding:20px; margin-bottom:16px; }
 .det-ct   { font-family:var(--serif); font-size:14px; font-weight:700; color:var(--navy); margin-bottom:12px; padding-bottom:9px; border-bottom:1px solid #f0f4f0; }
 .det-row  { display:flex; justify-content:space-between; align-items:flex-start; padding:8px 0; border-bottom:1px solid #f7faf7; }
@@ -341,7 +341,7 @@ body::before {
   background:#fffbeb; border:1px solid #fde68a; border-radius:10px;
   padding:13px 16px; font-size:11px; color:#92400e; line-height:1.65; font-family:var(--mono);
 }
-
+ 
 /* ════════════════════════════════════
    CONTACT CARD (hero of detail page)
 ════════════════════════════════════ */
@@ -353,7 +353,7 @@ body::before {
 .cc-icon  { font-size:28px; margin-bottom:4px; }
 .cc-title { font-family:var(--serif); font-size:19px; font-weight:700; color:#fff; margin-bottom:3px; }
 .cc-sub   { font-size:11.5px; color:rgba(255,255,255,.45); line-height:1.5; }
-
+ 
 .cc-call {
   display:flex; align-items:center; justify-content:center; gap:10px;
   background:var(--gold); color:var(--navy); padding:18px 22px; font-weight:700;
@@ -389,7 +389,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
 .cc-trust { padding:12px 20px 16px; font-size:10px; color:rgba(255,255,255,.28); line-height:1.6; font-family:var(--mono); text-align:center; border-top:1px solid rgba(255,255,255,.05); }
 .cc-back-btn { width:100%; margin-top:10px; background:transparent; border:1.5px solid #cfd8d0; color:#64748b; padding:11px; border-radius:8px; cursor:pointer; font-size:12.5px; transition:all .2s; font-family:var(--sans); }
 .cc-back-btn:hover { border-color:#94a3b8; color:#334155; }
-
+ 
 /* ════════════════════════════════════
    LEAD FLASH
 ════════════════════════════════════ */
@@ -400,7 +400,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
   opacity:0; transform:translateY(10px); transition:all .3s ease; pointer-events:none;
 }
 .lead-flash.show { opacity:1; transform:translateY(0); }
-
+ 
 /* ════════════════════════════════════
    CTA BANNER
 ════════════════════════════════════ */
@@ -413,7 +413,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
 .cta-banner p  { font-size:13.5px; color:rgba(247,242,234,.65); line-height:1.6; }
 .cta-btn { background:var(--saffron); color:#fff; font-size:13.5px; font-weight:500; padding:12px 22px; border-radius:8px; border:none; cursor:pointer; white-space:nowrap; transition:background .2s; font-family:var(--sans); }
 .cta-btn:hover { background:var(--saffron2); }
-
+ 
 /* ════════════════════════════════════
    LYB MODAL
 ════════════════════════════════════ */
@@ -457,7 +457,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
 .lyb-success p  { font-size:13.5px; color:var(--ink2); line-height:1.6; }
 .f-note { font-size:10.5px; color:#64748b; font-family:var(--mono); margin-top:13px; padding-top:12px; border-top:1px solid #e2e8f0; text-align:center; line-height:1.6; }
 .f-err  { display:none; background:#fff0f0; border:1px solid #fca5a5; border-radius:7px; padding:10px 12px; font-size:12.5px; color:#b91c1c; margin-bottom:12px; }
-
+ 
 /* ════════════════════════════════════
    ADMIN PANEL
 ════════════════════════════════════ */
@@ -527,7 +527,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
 .adm-lc-call  { background:#d1fae5; color:#065f46; }
 .adm-lc-email { background:#e0f2fe; color:#0369a1; }
 .adm-lc-view  { background:#f3f4f6; color:#374151; }
-
+ 
 /* ════════════════════════════════════
    COMPLIANCE FOOTER
 ════════════════════════════════════ */
@@ -546,7 +546,7 @@ a.cc-drow-val:hover { color:var(--gold2); }
 .comp-text { font-size:10px; line-height:1.65; color:rgba(247,242,234,.38); font-family:var(--mono); max-height:76px; overflow:hidden; transition:max-height .3s, opacity .3s; }
 #comp-footer.col .comp-text { max-height:0; opacity:0; }
 .comp-text strong { color:rgba(201,162,39,.55); font-weight:500; }
-
+ 
 /* ════════════════════════════════════
    FOOTER
 ════════════════════════════════════ */
@@ -556,7 +556,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
 </style>
 </head>
 <body>
-
+ 
 <!-- OPENING -->
 <div id="opening" aria-hidden="true">
   <div class="op-symbols">
@@ -567,10 +567,10 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
   <div class="op-tag">Find · Compare · Contact</div>
   <div class="op-bar"><div class="op-bar-fill"></div></div>
 </div>
-
+ 
 <!-- LEAD FLASH -->
 <div class="lead-flash" id="leadFlash"></div>
-
+ 
 <!-- ADMIN PANEL -->
 <div id="admin-panel">
   <div class="adm-login-wrap" id="admLoginWrap">
@@ -609,7 +609,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <div id="admList"></div>
   </div>
 </div>
-
+ 
 <!-- DETAIL PANEL -->
 <div id="det-panel">
   <nav class="det-nav">
@@ -618,7 +618,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
   </nav>
   <div class="det-body" id="detBody"></div>
 </div>
-
+ 
 <!-- LYB OVERLAY -->
 <div class="overlay" id="lybOverlay" onclick="closeLYBOvr(event)">
   <div class="lyb-box">
@@ -662,7 +662,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     </div>
   </div>
 </div>
-
+ 
 <!-- ════════════ MAIN SITE ════════════ -->
 <nav class="nav">
   <span class="nav-logo" id="logoTrigger">CurrencyBuddy<sup>Beta</sup></span>
@@ -673,17 +673,17 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <button class="btn-ghost" id="adminBtn" onclick="openAdmin()" title="Admin">⚙</button>
   </div>
 </nav>
-
+ 
 <div class="disc-strip">
   Rates shown are indicative mid-market references only · Not financial advice · Currency Buddy does not process transactions or hold funds
 </div>
-
+ 
 <div class="ticker-wrap">
   <div class="ticker-pill">Live Rates <span class="ticker-live-dot"></span></div>
   <div class="ticker-outer"><div class="ticker-track" id="tickerTrack">Loading rates…</div></div>
   <div class="ticker-note">INDICATIVE</div>
 </div>
-
+ 
 <div class="hero">
   <div class="hero-label">Delhi NCR · Verified Forex Directory</div>
   <h1>Find <i>Trusted</i> Currency Exchange Providers Near You</h1>
@@ -700,7 +700,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <div class="h-stat"><div class="h-stat-num">4</div><div class="h-stat-lbl">Delhi areas</div></div>
   </div>
 </div>
-
+ 
 <div class="search-bar">
   <div class="search-inner">
     <div class="search-box">
@@ -730,14 +730,14 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <button class="s-btn" onclick="applyFS()">Search</button>
   </div>
 </div>
-
+ 
 <div class="live-banner" id="liveBanner">
   <span class="dot"></span>
   <span>Live mid-market reference — </span>
   <strong id="liveRateDisplay">1 USD = ₹83.59</strong>
   <span id="liveRateTime" style="margin-left:auto;opacity:.5">—</span>
 </div>
-
+ 
 <div class="filters">
   <div class="filters-inner">
     <span class="f-label">Filter</span>
@@ -751,7 +751,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <span class="f-count" id="fCount">15 results</span>
   </div>
 </div>
-
+ 
 <div class="main" id="dealers">
   <div class="sort-row">
     <span class="sort-lbl">Sort by</span>
@@ -762,7 +762,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     </div>
   </div>
   <div class="grid" id="dealerGrid"></div>
-
+ 
   <div class="cta-banner">
     <div>
       <h2>Are you a forex dealer?</h2>
@@ -771,7 +771,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     <button class="cta-btn" onclick="openLYB()">Get Listed Free →</button>
   </div>
 </div>
-
+ 
 <footer>
   <span class="ft-logo">CurrencyBuddy</span>
   Delhi NCR · Mumbai · Bangalore (coming soon) · hello@currencybuddy.in
@@ -779,7 +779,7 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     Currency Buddy is a technology platform providing directory and information services only. We do not hold funds, process transactions, provide financial advice, or act as an intermediary in any forex transaction. All rates are indicative mid-market references and are not guaranteed transaction rates. © 2025 Currency Buddy Technologies Pvt. Ltd.
   </div>
 </footer>
-
+ 
 <div id="comp-footer" class="col">
   <div class="comp-toggle" onclick="toggleComp()">
     <div class="comp-toggle-l">
@@ -792,22 +792,21 @@ footer { background:var(--forest); color:rgba(247,242,234,.45); padding:28px 5vw
     Currency Buddy is a technology platform providing directory and information services only. We do not hold funds, process transactions, provide financial advice, or act as an intermediary in any forex transaction. All rates displayed are historical or indicative mid-market data and are <strong>NOT transaction rates</strong>. Actual rates set solely by the licensed provider. <strong>Not regulated</strong> by RBI, SEBI, or any financial authority. Operating as an IT company under the Information Technology Act, 2000.
   </div>
 </div>
-
+ 
 <!-- ════════════ SCRIPTS ════════════ -->
 <script>
 'use strict';
-
+ 
 /* ══════════════════════════════
    CONFIG — point to your backend
    In production, set API_BASE to your server URL e.g. https://api.currencybuddy.in
 ══════════════════════════════ */
 const API_BASE  = window.API_BASE || '';   // empty = same origin
 const WEBHOOK   = 'https://script.google.com/macros/s/AKfycbzt31oJ4lwAR6YlTxFCtkDoUd1ffUtRBuufx-l-J5sC1_IHVBaSG6K_tlR32QjOR1Tk/exec';
-// https://docs.google.com/spreadsheets/d/1f1bJRS5lp6DX6gq1ogOaFvhA49eNpkyDzI1HJj5IJdk/edit?gid=0#gid=0//
 const ADM_EMAIL = 'admin@currencybuddy.in';
 const ADM_PASS  = 'CurrencyBuddy@2025';
 const ADM_TOKEN = 'cb-admin-2025';
-
+ 
 /* ══════════════════════════════
    STATIC FALLBACK DATA
    Used when backend is not connected
@@ -829,10 +828,10 @@ const STATIC_PROVIDERS = [
   {id:14,slug:'forex4india',businessName:'Forex4India',ini:'FX',logoClass:'c-logo-green',type:'dealer',typeLabel:'Forex Dealer',location:'Karol Bagh, Delhi',area:'other',phone:'+91-11-2875-9999',email:null,website:null,services:'Currency Exchange,No Fees,Competitive Rates',hours:'Mon–Sun 10:00–20:00',minAmount:200,maxAmount:100000,speed:'Instant',isFeatured:false,rating:4.2,reviewCount:342,spread:0.15,tags:['Walk-in','Karol Bagh']},
   {id:15,slug:'sbi-forex-services',businessName:'SBI Forex Services',ini:'SB',logoClass:'c-logo-navy',type:'bank',typeLabel:'Government Bank',location:'Parliament Street, CP',area:'cp',phone:'1800-11-2211',email:'forex@sbi.co.in',website:'https://www.sbi.co.in/forex',services:'Demand Draft,Wire Transfer,SWIFT,Currency Exchange,Forex Card',hours:'Mon–Fri 9:30–15:30',minAmount:5000,maxAmount:1000000,speed:'1–5 business days',isFeatured:false,rating:3.9,reviewCount:21000,spread:0.81,tags:['Verified','Govt Bank','DD & Wire']},
 ];
-
+ 
 // Static rates fallback (INR per 1 unit of foreign currency)
 const STATIC_RATES = { USD:83.59, EUR:90.21, GBP:105.34, AED:22.75, SGD:62.18, CAD:61.42, AUD:53.87 };
-
+ 
 /* ══════════════════════════════
    STATE
 ══════════════════════════════ */
@@ -844,13 +843,13 @@ let liveRateTs  = 0;
 let isLiveRate  = false;
 let providers   = [...STATIC_PROVIDERS];  // initially static, replaced by API if available
 let useBackend  = false;  // flip to true when API responds
-
+ 
 /* ══════════════════════════════
    UTILITY
 ══════════════════════════════ */
 const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const getIni = n => (n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
-
+ 
 /* ══════════════════════════════
    LEAD TRACKING
 ══════════════════════════════ */
@@ -858,7 +857,7 @@ const ls  = k => { try { return JSON.parse(localStorage.getItem(k)||'[]'); } cat
 const lss = (k,v) => localStorage.setItem(k, JSON.stringify(v));
 const getLeads  = () => ls('cb_leads');
 const saveLeads = v => lss('cb_leads', v);
-
+ 
 async function trackLead(providerId, providerName, actionType) {
   // local cache
   const leads = getLeads();
@@ -866,7 +865,7 @@ async function trackLead(providerId, providerName, actionType) {
   if (leads.length > 500) leads.splice(0, leads.length - 500);
   saveLeads(leads);
   showLeadFlash(actionType, providerName);
-
+ 
   // fire to backend (non-blocking)
   if (useBackend) {
     try {
@@ -878,7 +877,7 @@ async function trackLead(providerId, providerName, actionType) {
     } catch {}
   }
 }
-
+ 
 let flashTimer = null;
 function showLeadFlash(type, name) {
   const el = document.getElementById('leadFlash');
@@ -889,7 +888,7 @@ function showLeadFlash(type, name) {
   clearTimeout(flashTimer);
   flashTimer = setTimeout(() => el.classList.remove('show'), 3000);
 }
-
+ 
 /* ══════════════════════════════
    LIVE RATES
 ══════════════════════════════ */
@@ -910,7 +909,7 @@ async function fetchRates() {
       }
     }
   } catch {}
-
+ 
   // direct fallback to open.er-api.com
   try {
     const r = await fetch('https://open.er-api.com/v6/latest/INR', { signal: AbortSignal.timeout(5000) });
@@ -930,11 +929,11 @@ async function fetchRates() {
       isLiveRate = true;
     }
   } catch {}
-
+ 
   updateLiveBanner();
   buildTicker();
 }
-
+ 
 function updateLiveBanner() {
   const rate = liveRates[gCurrency] || STATIC_RATES[gCurrency];
   document.getElementById('liveRateDisplay').textContent = `1 ${gCurrency} = ₹${rate.toFixed(2)}`;
@@ -943,13 +942,13 @@ function updateLiveBanner() {
     document.getElementById('liveRateTime').textContent = mins < 1 ? 'Updated just now' : `Updated ${mins}m ago`;
   }
 }
-
+ 
 function computeRate(provider) {
   const base = liveRates[gCurrency] || STATIC_RATES[gCurrency];
   const spread = provider.spread ?? 0.25;
   return +(base * (1 + spread / 100)).toFixed(4);
 }
-
+ 
 async function onCurrencyChange() {
   gCurrency = document.getElementById('curSel').value;
   updateLiveBanner();
@@ -957,7 +956,7 @@ async function onCurrencyChange() {
   await loadProviders();
   applyFS();
 }
-
+ 
 /* ══════════════════════════════
    LOAD PROVIDERS FROM API
 ══════════════════════════════ */
@@ -984,7 +983,7 @@ async function loadProviders() {
     }
   } catch {}
 }
-
+ 
 /* ══════════════════════════════
    TICKER
 ══════════════════════════════ */
@@ -1010,7 +1009,7 @@ function buildTicker() {
   }).join('');
   document.getElementById('tickerTrack').innerHTML = items;
 }
-
+ 
 /* ══════════════════════════════
    RENDER CARDS
 ══════════════════════════════ */
@@ -1018,12 +1017,12 @@ function renderCards(data) {
   const g = document.getElementById('dealerGrid');
   document.getElementById('fCount').textContent = data.length + ' results';
   document.getElementById('heroCount').textContent = providers.length;
-
+ 
   if (!data.length) {
     g.innerHTML = '<div class="no-results"><p style="font-size:14px">No providers match. Try clearing filters.</p></div>';
     return;
   }
-
+ 
   window._dm = {};
   g.innerHTML = data.map((d, i) => {
     window._dm[i] = d;
@@ -1035,7 +1034,7 @@ function renderCards(data) {
     const stars = '★'.repeat(Math.floor(d.rating));
     const revTxt = d.reviewCount ? Number(d.reviewCount).toLocaleString('en-IN') + ' reviews' : 'New listing';
     const callHref = d.phone ? `tel:${d.phone}` : '#';
-
+ 
     return `<div class="dcard${d.isFeatured ? ' featured' : ''}" style="animation-delay:${i * .04}s"
       onclick="openDetailByIdx(${i})" role="button" tabindex="0"
       onkeydown="if(event.key==='Enter')openDetailByIdx(${i})">
@@ -1074,12 +1073,12 @@ function renderCards(data) {
     </div>`;
   }).join('');
 }
-
+ 
 function openDetailByIdx(i) {
   const d = window._dm[i];
   if (d) { trackLead(d.id, d.businessName, 'view'); openDetail(d); }
 }
-
+ 
 /* ══════════════════════════════
    FILTER / SORT
 ══════════════════════════════ */
@@ -1099,27 +1098,27 @@ function applyFS() {
   const q = (document.getElementById('searchInp').value || '').toLowerCase().trim();
   const area = document.getElementById('areaSel').value;
   let d = [...providers];
-
+ 
   if (gFilter === 'dealer') d = d.filter(x => x.type === 'dealer');
   else if (gFilter === 'bank')  d = d.filter(x => x.type === 'bank');
   else if (gFilter === 'online')d = d.filter(x => x.type === 'online');
   else if (gFilter === 'cp')    d = d.filter(x => x.area === 'cp');
   else if (gFilter === 'gurgaon')d= d.filter(x => x.area === 'gurgaon');
   else if (gFilter === 'noida') d = d.filter(x => x.area === 'noida');
-
+ 
   if (area) d = d.filter(x => x.area === area);
   if (q) d = d.filter(x => (x.businessName + x.location + (x.typeLabel||'') + (x.services||'')).toLowerCase().includes(q));
-
+ 
   // compute final rates for sorting
   d = d.map(x => ({ ...x, _finalRate: x.finalRate ?? computeRate(x) }));
-
+ 
   if (gSort === 'rate')   d.sort((a, b) => b._finalRate - a._finalRate);
   else if (gSort === 'trust')  d.sort((a, b) => b.rating - a.rating);
   else if (gSort === 'spread') d.sort((a, b) => (a.spread ?? 0) - (b.spread ?? 0));
-
+ 
   renderCards([...d.filter(x => x.isFeatured), ...d.filter(x => !x.isFeatured)]);
 }
-
+ 
 /* ══════════════════════════════
    DETAIL PANEL
 ══════════════════════════════ */
@@ -1133,7 +1132,7 @@ function closeDetail() {
   document.getElementById('det-panel').classList.remove('open');
   document.body.style.overflow = '';
 }
-
+ 
 function renderDetail(d) {
   const phone = d.phone || '';
   const email = d.email || '';
@@ -1145,7 +1144,7 @@ function renderDetail(d) {
   const avCls = d.logoClass === 'c-logo-navy' ? 'det-av-n' : d.logoClass === 'c-logo-purple' ? 'det-av-p' : 'det-av-g';
   const waNum = phone.replace(/\D/g, '');
   const waMsg = encodeURIComponent('Hi, I found your listing on Currency Buddy and would like to enquire about your forex services.');
-
+ 
   const left = `
     <div class="det-header">
       <div class="det-av ${avCls}">${esc(ini)}</div>
@@ -1181,7 +1180,7 @@ function renderDetail(d) {
       <p style="font-size:10.5px;color:#94a3b8;margin-top:9px;font-family:var(--mono);line-height:1.5">Indicative only. Actual rate set by the provider. Confirm before transacting.</p>
     </div>
     <div class="det-disc"><strong>Directory listing only.</strong> Currency Buddy is not involved in any transaction between you and this provider. Contact them directly for rates, availability, and terms.</div>`;
-
+ 
   const right = `
     <div>
       <div class="contact-card">
@@ -1220,10 +1219,10 @@ function renderDetail(d) {
       </div>
       <button class="cc-back-btn" onclick="closeDetail()">← Back to All Providers</button>
     </div>`;
-
+ 
   document.getElementById('detBody').innerHTML = `<div class="det-layout"><div>${left}</div>${right}</div>`;
 }
-
+ 
 /* ══════════════════════════════
    LYB MODAL
 ══════════════════════════════ */
@@ -1243,7 +1242,7 @@ function closeLYB() {
   }, 300);
 }
 function closeLYBOvr(e) { if (e.target === document.getElementById('lybOverlay')) closeLYB(); }
-
+ 
 async function submitLYB() {
   const biz   = document.getElementById('lyb-biz').value.trim();
   const owner = document.getElementById('lyb-owner').value.trim();
@@ -1251,17 +1250,17 @@ async function submitLYB() {
   const email = document.getElementById('lyb-email').value.trim();
   const loc   = document.getElementById('lyb-loc').value.trim();
   const err   = document.getElementById('lybErr');
-
+ 
   if (!biz || !owner || !phone || !email || !loc) {
     err.style.display = 'block'; err.textContent = 'Please fill in all required fields.'; return;
   }
-
+ 
   const btn = document.getElementById('lybBtn'); btn.disabled = true; btn.textContent = 'Submitting…'; err.style.display = 'none';
   const svcs = [...document.querySelectorAll('#lybSvcs button.sel')].map(b => b.textContent.trim()).join(', ');
   const payload = { businessName: biz, ownerName: owner, phone, email, location: loc, services: svcs, message: document.getElementById('lyb-msg').value.trim() };
-
+ 
   let ok = false;
-
+ 
   // try backend first
   if (API_BASE) {
     try {
@@ -1271,7 +1270,7 @@ async function submitLYB() {
       if (r.ok) ok = true;
     } catch {}
   }
-
+ 
   // fallback to Google Sheets webhook
   if (!ok) {
     try {
@@ -1279,7 +1278,7 @@ async function submitLYB() {
       ok = true;
     } catch {}
   }
-
+ 
   if (ok) {
     document.getElementById('lybForm').style.display = 'none';
     document.getElementById('lybOk').classList.add('show');
@@ -1289,7 +1288,7 @@ async function submitLYB() {
     err.innerHTML = 'Something went wrong. Email <a href="mailto:hello@currencybuddy.in" style="color:#b91c1c">hello@currencybuddy.in</a>';
   }
 }
-
+ 
 /* ══════════════════════════════
    ADMIN PANEL
 ══════════════════════════════ */
@@ -1299,9 +1298,8 @@ document.getElementById('logoTrigger').addEventListener('click', () => {
   logoT = setTimeout(() => logoTaps = 0, 2000);
   if (logoTaps >= 5) { logoTaps = 0; openAdmin(); }
 });
-
-token = "https://docs.google.com/spreadsheets/d/1f1bJRS5lp6DX6gq1ogOaFvhA49eNpkyDzI1HJj5IJdk/edit?gid=0#gid=0"
-let admToken = token;
+ 
+let admToken = null;
 function openAdmin() {
   document.getElementById('admin-panel').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1309,12 +1307,12 @@ function openAdmin() {
   if (stored) { admToken = stored; showAdmDash(); }
 }
 function closeAdmin() { document.getElementById('admin-panel').classList.remove('open'); document.body.style.overflow = ''; }
-
+ 
 async function adminLogin() {
   const email = document.getElementById('admEmail').value.trim();
   const pass  = document.getElementById('admPass').value;
   const errEl = document.getElementById('admErr');
-
+ 
   // Try real API first
   if (API_BASE) {
     try {
@@ -1332,7 +1330,7 @@ async function adminLogin() {
       }
     } catch {}
   }
-
+ 
   // Fallback hardcoded MVP check
   if (email === ADM_EMAIL && pass === ADM_PASS) {
     admToken = ADM_TOKEN;
@@ -1345,7 +1343,7 @@ async function adminLogin() {
   }
 }
 document.getElementById('admPass').addEventListener('keydown', e => { if (e.key === 'Enter') adminLogin(); });
-
+ 
 function adminLogout() {
   admToken = null; sessionStorage.removeItem('cb_auth');
   document.getElementById('admLoginWrap').style.display = 'flex';
@@ -1353,17 +1351,17 @@ function adminLogout() {
   document.getElementById('admEmail').value = '';
   document.getElementById('admPass').value = '';
 }
-
+ 
 async function showAdmDash() {
   document.getElementById('admLoginWrap').style.display = 'none';
   document.getElementById('admDash').style.display = 'block';
   await fetchFromAPI();
 }
-
+ 
 async function fetchFromAPI() {
   const btn = document.getElementById('fetchBtn');
   btn.textContent = 'Loading…'; btn.disabled = true;
-
+ 
   if (API_BASE && admToken) {
     try {
       const headers = { Authorization: `Bearer ${admToken}` };
@@ -1388,12 +1386,12 @@ async function fetchFromAPI() {
       }
     } catch { admAlert('API not connected — using local data', 'err'); }
   }
-
+ 
   // Also load local lead data
   refreshLocalStats();
   btn.textContent = '↓ Refresh Providers'; btn.disabled = false;
 }
-
+ 
 function updateAdmStats(pen, app, rej, leads) {
   document.getElementById('sPen').textContent = pen;
   document.getElementById('sApp').textContent = app;
@@ -1402,13 +1400,13 @@ function updateAdmStats(pen, app, rej, leads) {
   document.getElementById('tApp').textContent = app;
   document.getElementById('tRej').textContent = rej;
 }
-
+ 
 function refreshLocalStats() {
   const leads = getLeads();
   document.getElementById('sTotalLeads').textContent = leads.length;
   document.getElementById('tLeads').textContent = leads.length;
 }
-
+ 
 // Local-storage based admin (MVP fallback without backend)
 const getLsPending  = () => ls('cb_pending');
 const getLsApproved = () => ls('cb_approved');
@@ -1416,7 +1414,7 @@ const getLsRejected = () => ls('cb_rejected');
 const saveLsPending  = v => lss('cb_pending', v);
 const saveLsApproved = v => lss('cb_approved', v);
 const saveLsRejected = v => lss('cb_rejected', v);
-
+ 
 let curTab = 'pending';
 function switchTab(t, btn) {
   curTab = t;
@@ -1424,16 +1422,16 @@ function switchTab(t, btn) {
   btn.classList.add('on');
   renderAdmTab(t);
 }
-
+ 
 function renderAdmProvidersFromAPI(allProviders) {
   window._admAllProviders = allProviders;
   renderAdmTab(curTab);
 }
-
+ 
 function renderAdmTab(tab) {
   const list = document.getElementById('admList');
   if (tab === 'leads') { renderLeadsTab(list); return; }
-
+ 
   let data;
   if (window._admAllProviders) {
     data = window._admAllProviders.filter(p => p.status === tab || (tab === 'active' && p.status === 'active'));
@@ -1446,18 +1444,18 @@ function renderAdmTab(tab) {
     if (tab === 'active')   data = getLsApproved();
     if (tab === 'rejected') data = getLsRejected();
   }
-
+ 
   if (!data || !data.length) {
     list.innerHTML = `<div class="adm-empty"><div class="adm-empty-ic">${tab==='pending'?'📋':tab==='active'?'✅':'🚫'}</div><div>${tab==='pending'?'No pending submissions yet.':tab==='active'?'No live providers.':'No rejected providers.'}</div></div>`;
     return;
   }
-
+ 
   const note = tab === 'pending'
     ? '<div class="adm-note">📋 Review each submission. Approve to make live.</div>'
     : tab === 'active'
     ? '<div class="adm-note">✅ These providers are currently live on the directory.</div>'
     : '';
-
+ 
   list.innerHTML = note + data.map(p => {
     const bname = p.business_name || p.businessName || '';
     const ini = esc(getIni(bname));
@@ -1491,7 +1489,7 @@ function renderAdmTab(tab) {
     </div>`;
   }).join('');
 }
-
+ 
 async function updateProviderStatus(id, status, btn) {
   if (!API_BASE || !admToken) { admAlert('Backend not connected.', 'err'); return; }
   btn.disabled = true; btn.textContent = '…';
@@ -1508,7 +1506,7 @@ async function updateProviderStatus(id, status, btn) {
     }
   } catch { admAlert('Error updating status.', 'err'); btn.disabled = false; btn.textContent = status === 'active' ? '✓ Approve' : '✕ Reject'; }
 }
-
+ 
 function renderLeadsTab(list) {
   // prefer API data
   if (window._admLeads && window._admLeads.length) {
@@ -1526,7 +1524,7 @@ function renderLeadsTab(list) {
       </div>`;
     return;
   }
-
+ 
   // fallback: local
   const leads = getLeads();
   if (!leads.length) { list.innerHTML = '<div class="adm-empty"><div class="adm-empty-ic">📊</div><div>No leads yet.</div></div>'; return; }
@@ -1549,13 +1547,13 @@ function renderLeadsTab(list) {
     </div>`).join('')}
     </div>`;
 }
-
+ 
 function admAlert(msg, type) {
   const el = document.getElementById('admAlertBox');
   el.textContent = msg; el.className = 'adm-alert-box show ' + type;
   setTimeout(() => el.classList.remove('show'), 7000);
 }
-
+ 
 /* ══════════════════════════════
    COMPLIANCE FOOTER
 ══════════════════════════════ */
@@ -1565,7 +1563,7 @@ setTimeout(() => {
   c.classList.remove('col');
   setTimeout(() => c.classList.add('col'), 5000);
 }, 3200);
-
+ 
 /* ══════════════════════════════
    OPENING ANIMATION
 ══════════════════════════════ */
@@ -1574,14 +1572,14 @@ setTimeout(() => {
   setTimeout(() => { a.classList.add('away'); setTimeout(() => a.remove(), 900); }, 2400);
   a.addEventListener('click', () => { a.classList.add('away'); setTimeout(() => a.remove(), 600); });
 })();
-
+ 
 /* ══════════════════════════════
    KEYBOARD
 ══════════════════════════════ */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeLYB(); closeAdmin(); closeDetail(); }
 });
-
+ 
 /* ══════════════════════════════
    INIT
 ══════════════════════════════ */
@@ -1598,3 +1596,4 @@ document.addEventListener('keydown', e => {
 </script>
 </body>
 </html>
+ 
